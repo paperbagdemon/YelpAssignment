@@ -16,6 +16,7 @@
 		9F2B7DE92510A6A700482AF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F2B7DE72510A6A700482AF7 /* LaunchScreen.storyboard */; };
 		9F2B7DF42510A6A700482AF7 /* YelpAssignmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7DF32510A6A700482AF7 /* YelpAssignmentTests.swift */; };
 		9F2B7DFF2510A6A700482AF7 /* YelpAssignmentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7DFE2510A6A700482AF7 /* YelpAssignmentUITests.swift */; };
+		9F2B7E0F2510AF3800482AF7 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		9F2B7DFA2510A6A700482AF7 /* YelpAssignmentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpAssignmentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F2B7DFE2510A6A700482AF7 /* YelpAssignmentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpAssignmentUITests.swift; sourceTree = "<group>"; };
 		9F2B7E002510A6A700482AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F2B7E0F2510AF3800482AF7 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +88,7 @@
 				9F2B7DF22510A6A700482AF7 /* YelpAssignmentTests */,
 				9F2B7DFD2510A6A700482AF7 /* YelpAssignmentUITests */,
 				9F2B7DD72510A6A600482AF7 /* Products */,
+				9F2B7E0D2510AF3800482AF7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +143,14 @@
 			path = YelpAssignmentUITests;
 			sourceTree = "<group>";
 		};
+		9F2B7E0D2510AF3800482AF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -149,6 +161,8 @@
 				9F2B7DD22510A6A600482AF7 /* Sources */,
 				9F2B7DD32510A6A600482AF7 /* Frameworks */,
 				9F2B7DD42510A6A600482AF7 /* Resources */,
+				9F2B7E0C2510A6E600482AF7 /* ShellScript */,
+				9F2B7E102510AF5800482AF7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -264,6 +278,44 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9F2B7E0C2510A6E600482AF7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  git diff --cached --name-only | grep \"\\.swift\" | while read filename; do\n      echo \"swiftlinting file $filename\";\n      swiftlint lint --path \"$(git rev-parse --show-toplevel)/${filename}\";\n  done\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		9F2B7E102510AF5800482AF7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9F2B7DD22510A6A600482AF7 /* Sources */ = {
@@ -441,7 +493,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"YelpAssignment/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = YelpAssignment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,7 +517,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"YelpAssignment/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = YelpAssignment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
