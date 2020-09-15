@@ -9,21 +9,21 @@
 import Foundation
 
 struct Business: Identifiable, Decodable {
-    public var id: String?
-    public var name: String = ""
-    public var imageUrl: String?
-    public var isClosed: Bool?
-    public var url: String?
-    public var price: String?
-    public var phone: String?
-    public var displayPhone: String?
-    public var photos: [String]?
-    public var rating: Double?
-    public var reviewCount: Int?
-    public var categories: [Category]?
-    public var distance: Double?
-    public var coordinates: Coordinates?
-    public var transactions: [String]?
+    var id: String?
+    var name: String = ""
+    var imageUrl: String?
+    var isClosed: Bool?
+    var url: String?
+    var price: String?
+    var phone: String?
+    var displayPhone: String?
+    var photos: [String]?
+    var rating: Double?
+    var reviewCount: Int?
+    var categories: [Category]?
+    var distance: Double?
+    var coordinates: Coordinates?
+    var transactions: [String]?
     enum CodingKeys: String, CodingKey {
         case id
         case name

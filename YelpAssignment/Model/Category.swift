@@ -9,8 +9,8 @@
 import Foundation
 
 struct Category: Decodable {
-    public var alias: String?
-    public var title: String?
+    var alias: String?
+    var title: String?
     enum CodingKeys: String, CodingKey {
         case alias
         case title

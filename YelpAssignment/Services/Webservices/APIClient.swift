@@ -10,10 +10,10 @@ import Foundation
 import Alamofire
 
 class APIClient {
-    public static let defaultClient = APIClient(apiKey: Setting.yelpAPIKey, baseURL: URL(string: Setting.yelpBaseURL)!)
-    public var apiKey: String
-    public var baseUrl: URL
-    public lazy var session: Alamofire.Session = {
+    static let defaultClient = APIClient(apiKey: Setting.yelpAPIKey, baseURL: URL(string: Setting.yelpBaseURL)!)
+    var apiKey: String
+    var baseUrl: URL
+    lazy var session: Alamofire.Session = {
         var headers = HTTPHeaders.default
         headers["Authorization"] = "Bearer \(apiKey)"
         let configuration = URLSessionConfiguration.default

@@ -9,9 +9,9 @@
 import Foundation
 
 struct APIError: Decodable {
-    public var description: String?
-    public var field: String?
-    public var code: String?
+    var description: String?
+    var field: String?
+    var code: String?
     enum CodingKeys: String, CodingKey {
         case description
         case field

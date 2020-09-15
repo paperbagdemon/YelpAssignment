@@ -9,15 +9,15 @@
 import Foundation
 
 struct Location: Decodable {
-    public var addressOne: String?
-    public var addressTwo: String?
-    public var addressThree: String?
-    public var city: String?
-    public var state: String?
-    public var zipCode: String?
-    public var country: String?
-    public var displayAddress: [String]?
-    public var crossStreets: String?
+    var addressOne: String?
+    var addressTwo: String?
+    var addressThree: String?
+    var city: String?
+    var state: String?
+    var zipCode: String?
+    var country: String?
+    var displayAddress: [String]?
+    var crossStreets: String?
     enum CodingKeys: String, CodingKey {
         case addressOne     =   "address1"
         case addressTwo     =   "address2"
