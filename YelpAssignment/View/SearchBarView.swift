@@ -19,7 +19,6 @@ struct SearchBarView: View {
                 Image(systemName: "magnifyingglass")
 
                 TextField(placeholder, text: $searchText, onEditingChanged: { _ in
-//                    self.onTextChanged?(self.searchText)
                     print("onEditingChanged")
                 }, onCommit: {
                     self.onTextChanged?(self.searchText)

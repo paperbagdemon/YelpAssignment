@@ -1,0 +1,11 @@
+framework module SDWebImageSwiftUI {
+  umbrella header "SDWebImageSwiftUI.h"
+
+  export *
+  module * { export * }
+}
+
+module SDWebImageSwiftUI.Swift {
+    header "SDWebImageSwiftUI-Swift.h"
+    requires objc
+}

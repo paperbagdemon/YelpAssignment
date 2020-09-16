@@ -8,18 +8,24 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct BusinessListView: View {
     @ObservedObject var viewModel = HomeViewModel(service: APIClient.defaultClient)
     var body: some View {
-        VStack {
-            HeaderView()
-            SearchBarView(placeholder: "Name / Address / Cuisine",
-                          onTextChanged: { text in
-                            self.viewModel.searchBusiness(keyword: text)
-                }
-            )
-            bodyView()
-            Spacer()
+        NavigationView {
+            VStack {
+                HeaderView()
+                SearchBarView(placeholder: "Name / Address / Cuisine",
+                              onTextChanged: { text in
+                                self.viewModel.searchBusiness(keyword: text)
+                    })
+                    .offset(x: 0, y: -30)
+                    .padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 10))
+                bodyView()
+                    .padding(EdgeInsets.init(top: -30, leading: 0, bottom: 0, trailing: 0))
+                Spacer()
+            }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
     }
     func bodyView() -> AnyView {
@@ -33,19 +39,34 @@ struct HomeView: View {
                 if !businesses.isEmpty {
                     returnView = AnyView(
                         List(businesses) { business in
-                            Text(business.name)
+                            NavigationLink(destination: BusinessDetailView(business: business)) {
+                                Text(business.name)
+                            }
                     })
                 } else {
                     returnView = AnyView(
+                        ZStack {
+                            Image("business")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(EdgeInsets.init(top: 20, leading: 20, bottom: 40, trailing: 20))
                             Text("We didn't find what you are looking for")
+                            .shadow(color: .white, radius: 1)
+                        }
                     )
                 }
             } else {
                 returnView = AnyView(
+                    ZStack {
+                        Image("business")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(EdgeInsets.init(top: 20, leading: 20, bottom: 40, trailing: 20))
                         Text("Begin searching for business")
+                        .shadow(color: .white, radius: 1)
+                    }
                 )
             }
-
         }
         return returnView
     }
@@ -53,6 +74,6 @@ struct HomeView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        BusinessListView()
     }
 }

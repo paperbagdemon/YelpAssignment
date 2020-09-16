@@ -1,0 +1,11 @@
+{
+  "commitish" : "1.5.0",
+  "iOS" : [
+    {
+      "hash" : "1a1d9ca263b298bc35c0541d8909970b7680698cbd3e82915bbaf79b04534b04",
+      "name" : "SDWebImageSwiftUI",
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+    }
+  ]
+}

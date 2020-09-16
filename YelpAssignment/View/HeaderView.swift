@@ -12,9 +12,12 @@ struct HeaderView: View {
 
     var body: some View {
         VStack {
-            Image("gir1")
-            Text("Yelp").font(.title).fontWeight(.light)
+            Image("yelp")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(EdgeInsets.init(top: 20, leading: 20, bottom: 40, trailing: 20))
         }
+        .background(Color.red)
     }
 }
 
