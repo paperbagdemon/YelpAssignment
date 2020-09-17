@@ -49,6 +49,9 @@ struct Business: Identifiable, Decodable {
 
 extension Business {
     func displayAddress() -> String {
+        return displayAddress(delimiter: "\n")
+    }
+    func displayAddress(delimiter: String) -> String {
         guard let addresses = self.location?.displayAddress else {
             return self.location?.addressOne ?? ""
         }
@@ -57,7 +60,7 @@ extension Business {
             if !address.isEmpty {
                 displayAddress += address
                 if address != addresses.last {
-                    displayAddress += "\n"
+                    displayAddress += delimiter
                 }
             }
         }

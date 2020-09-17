@@ -40,7 +40,7 @@ struct BusinessListView: View {
                     returnView = AnyView(
                         List(businesses) { business in
                             NavigationLink(destination: BusinessDetailView(viewModel: BusinessDetailViewModel.init(apiClient: APIClient.defaultClient, businessID: business.id!, business: business))) {
-                                Text(business.name)
+                                BusinessListRowView(business: business)
                             }
                     })
                 } else {
@@ -62,8 +62,14 @@ struct BusinessListView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding(EdgeInsets.init(top: 20, leading: 20, bottom: 40, trailing: 20))
+                        .opacity(0.2)
                         Text("Find shops")
+                        .bold()
                         .shadow(color: .white, radius: 1)
+                        .font(.system(size: 32))
+                        .foregroundColor(Color.red.opacity(0.9))
+            
+
                     }
                 )
             }

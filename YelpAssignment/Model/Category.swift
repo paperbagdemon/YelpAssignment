@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Category: Decodable {
+struct Category: Identifiable, Decodable {
+    var id = UUID()
     var alias: String?
     var title: String?
     enum CodingKeys: String, CodingKey {

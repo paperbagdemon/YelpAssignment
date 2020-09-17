@@ -71,11 +71,11 @@ struct BusinessDetailView: View {
                         .frame(height: 200)
                         .background(Color.gray.opacity(0.3))
                         HStack {
-                            buildCategoryView()
-                                .font(.system(size: 18))
+                            CategoriesView(categories: business.categories)
                             .padding(EdgeInsets.init(top: 5, leading: 20, bottom: 5, trailing: 0))
                             Spacer()
                         }
+                        PhotosRollView(photos: business.photos, size: 120)
                         MapView(coordinate: business.coordinates ?? Coordinates.init(latitude: 0, longitude: 0))
                         .frame(height: 160)
                         .disabled(true)
@@ -108,33 +108,16 @@ struct BusinessDetailView: View {
             )
         }
     }
-    
-    func buildCategoryView() -> AnyView {
-        if let categories = viewModel.business?.categories {
-            return AnyView(
-                CategoriesView(categories: categories)
-            )
-        } else {
-            return AnyView(
-                EmptyView()
-            )
-        }
-    }
 }
 
 struct BusinessDetailView_Previews: PreviewProvider {
     static var previews: some View {
-//        use this url to test image loding
-//        imageUrl: "https://s3-media1.fl.yelpcdn.com/bphoto/zVCoHsMZebOXgM9uZDIWKw/o.jpg"
-//        BusinessDetailView(viewModel: BusinessDetailViewModel.init(apiClient: APIClient.defaultClient,
-//        businessID: "sFKF4eyP6DKdr2o1qpykig"))
-
-
         BusinessDetailView(viewModel: BusinessDetailViewModel.init(apiClient: APIClient.defaultClient,
                                                                    businessID: "sFKF4eyP6DKdr2o1qpykig",
                                                                    business: Business(id: "sFKF4eyP6DKdr2o1qpykig", name: "Lola Basyang's", imageUrl: nil,
                                                                    isClosed: nil, url: nil, price: nil, phone: "+639228177570",
-                                                                   displayPhone: "+639228177570", photos: nil, rating: 4,
+                                                                   displayPhone: "+639228177570", photos: [Stub.testPhotoURL,Stub.testPhotoURL,Stub.testPhotoURL,
+                                                                    Stub.testPhotoURL], rating: 4,
                                                                    reviewCount: nil, categories: [Category.init(alias: "Filipino", title: "Filipino"),
                                                                    Category.init(alias: "Seafood", title: "Seafood"),
                                                                    Category.init(alias: "Fruit", title: "Fruit"),

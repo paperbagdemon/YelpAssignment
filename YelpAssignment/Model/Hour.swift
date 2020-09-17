@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Hour: Decodable {
+struct Hour: Identifiable, Decodable {
+    var id = UUID()
     var hoursType: String?
     var open: [Open]?
     var isOpenNow: Bool?

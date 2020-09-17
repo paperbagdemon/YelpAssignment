@@ -37,6 +37,7 @@ struct ReviewsView: View {
                         .frame(width: 60, height: 60)
                         .clipped()
                         .padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 0))
+                        .cornerRadius(3)
                     }
                     .frame(minWidth: 60, maxWidth: 60, minHeight: 100, idealHeight: 120, maxHeight: 180)
                     VStack {
@@ -63,8 +64,9 @@ struct ReviewsView: View {
                         Text("Reviews")
                         .bold()
                     }
-                    ForEach(0..<reviews.count) { index in
-                        self.buildReviewRow(review: reviews[index])
+                    .offset(x: 0, y: 10)
+                    ForEach(reviews) { review in
+                        self.buildReviewRow(review: review)
                     }
                 }
             )

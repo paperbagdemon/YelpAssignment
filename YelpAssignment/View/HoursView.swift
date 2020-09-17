@@ -22,8 +22,8 @@ struct HoursView: View {
                         self.isDisplayingHours.toggle()
                     }, label: {
                         VStack {
-                            ForEach(0..<hours.count) { index in
-                                Text(self.hours![index].displayText())
+                            ForEach(hours) { hour in
+                                Text(hour.displayText())
                                     .font(.system(size: 12))
                             }
                         }

@@ -9,15 +9,33 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    var categories: [Category]
+    var categories: [Category]?
+    var size = 12
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 25) {
-                ForEach(0..<categories.count) { index in
-                    Text(self.categories[index].alias ?? "")
-                        .font(.system(size: 12))
-                }
+        buildBodyView()
+    }
+    func buildBodyView() -> AnyView {
+        if let categories = self.categories {
+            if !categories.isEmpty {
+                return AnyView(
+                    ScrollView(.horizontal) {
+                        HStack(spacing: 12) {
+                            ForEach(categories) { category in
+                                Text(category.alias ?? "")
+                                .font(.system(size: CGFloat(self.size)))
+                            }
+                        }
+                    }
+                )
+            } else {
+                return AnyView(
+                    EmptyView()
+                )
             }
+        } else {
+            return AnyView(
+                EmptyView()
+            )
         }
     }
 }
