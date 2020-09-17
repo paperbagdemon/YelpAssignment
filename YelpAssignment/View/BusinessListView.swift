@@ -9,18 +9,18 @@
 import SwiftUI
 
 struct BusinessListView: View {
-    @ObservedObject var viewModel = HomeViewModel(service: APIClient.defaultClient)
+    @ObservedObject var viewModel = BusinessListViewModel(apiClient: APIClient.defaultClient)
     var body: some View {
         NavigationView {
             VStack {
                 HeaderView()
                 SearchBarView(placeholder: "Name / Address / Cuisine",
                               onTextChanged: { text in
-                                self.viewModel.searchBusiness(keyword: text)
+                                self.viewModel.searchBusinesses(keyword: text)
                     })
                     .offset(x: 0, y: -30)
                     .padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 10))
-                bodyView()
+                buildContentView()
                     .padding(EdgeInsets.init(top: -30, leading: 0, bottom: 0, trailing: 0))
                 Spacer()
             }
@@ -28,7 +28,7 @@ struct BusinessListView: View {
             .navigationBarHidden(true)
         }
     }
-    func bodyView() -> AnyView {
+    func buildContentView() -> AnyView {
         var returnView: AnyView
         if viewModel.error != nil {
             returnView = AnyView(
@@ -39,7 +39,7 @@ struct BusinessListView: View {
                 if !businesses.isEmpty {
                     returnView = AnyView(
                         List(businesses) { business in
-                            NavigationLink(destination: BusinessDetailView(business: business)) {
+                            NavigationLink(destination: BusinessDetailView(viewModel: BusinessDetailViewModel.init(apiClient: APIClient.defaultClient, businessID: business.id!, business: business))) {
                                 Text(business.name)
                             }
                     })

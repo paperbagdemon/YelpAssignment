@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct BusinessListView: View {
-    @ObservedObject var viewModel = HomeViewModel(service: APIClient.defaultClient)
+    @ObservedObject var viewModel = BusinessListViewModel(service: APIClient.defaultClient)
     var body: some View {
         NavigationView {
             VStack {

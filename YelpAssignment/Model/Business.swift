@@ -23,7 +23,9 @@ struct Business: Identifiable, Decodable {
     var categories: [Category]?
     var distance: Double?
     var coordinates: Coordinates?
+    var location: Location?
     var transactions: [String]?
+    var hours: [Hour]?
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -39,23 +41,26 @@ struct Business: Identifiable, Decodable {
         case categories
         case distance
         case coordinates
+        case location
         case transactions
+        case hours
     }
 }
 
-//extension Business {
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        let string = try container.decode(String.self, forKey: .url)
-//        guard
-//            let percentEncoded = string
-//                .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-//            let url = URL(string: percentEncoded)
-//        else {
-//            throw DecodingError.dataCorruptedError(forKey: .url,
-//                                                   in: container,
-//                debugDescription: "Invalid url string: \(string)")
-//        }
-//        self.url = url
-//    }
-//}
+extension Business {
+    func displayAddress() -> String {
+        guard let addresses = self.location?.displayAddress else {
+            return self.location?.addressOne ?? ""
+        }
+        var displayAddress = ""
+        for address in addresses {
+            if !address.isEmpty {
+                displayAddress += address
+                if address != addresses.last {
+                    displayAddress += "\n"
+                }
+            }
+        }
+        return displayAddress
+    }
+}

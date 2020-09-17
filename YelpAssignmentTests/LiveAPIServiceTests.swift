@@ -21,8 +21,38 @@ class LiveAPIServiceTests: XCTestCase {
             serviceError = error
             expect.fulfill()
         }
-        waitForExpectations(timeout: 5.0, handler: nil)
-        XCTAssertNil(serviceError, "SearchBusinessAPIService call failed")
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(serviceError, serviceError?.localizedDescription ?? "")
         XCTAssertNotNil(serviceResult, "SearchBusinessAPIService call failed")
+    }
+    
+    func testFecthBusinessDetail() {
+        let expect = expectation(description: "businessDetailsWebservice")
+        let businessInfoService = BusinessDetailAPIService(client: APIClient.defaultClient, businessId: "sFKF4eyP6DKdr2o1qpykig")
+        var serviceError: Error?
+        var serviceResult: Business?
+        businessInfoService.request { (result, error) in
+            serviceResult = result
+            serviceError = error
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(serviceError, serviceError?.localizedDescription ?? "")
+        XCTAssertNotNil(serviceResult, "BusinessDetailAPIService call failed")
+    }
+    
+    func testFetchReviews(){
+        let expect = expectation(description: "reviewsWebservice")
+        let businessInfoService = ReviewAPIService(client: APIClient.defaultClient, businessId: "sFKF4eyP6DKdr2o1qpykig")
+        var serviceError: Error?
+        var serviceResult: ReviewAPIServiceResult?
+        businessInfoService.request { (result, error) in
+            serviceResult = result
+            serviceError = error
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(serviceError, serviceError?.localizedDescription ?? "")
+        XCTAssertNotNil(serviceResult, "ReviewAPIService is nil")
     }
 }

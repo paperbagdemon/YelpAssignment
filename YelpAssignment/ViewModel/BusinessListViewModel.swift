@@ -10,14 +10,14 @@ import Foundation
 import Combine
 
 final class BusinessListViewModel: ObservableObject {
-    private var apiService: APIClient!
+    private var apiClient: APIClient!
     @Published private(set) var businesses: [Business]?
     @Published private(set) var error: Error?
-    init(service: APIClient) {
-        apiService = service
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
-    func searchBusiness(keyword: String) {
-        let service = SearchBusinessAPIService.init(client: APIClient.defaultClient)
+    func searchBusinesses(keyword: String) {
+        let service = SearchBusinessAPIService.init(client: self.apiClient)
         service.location = keyword
         service.term = keyword
         service.radius = 20000

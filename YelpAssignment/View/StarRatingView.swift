@@ -10,12 +10,16 @@ import SwiftUI
 
 struct StarRatingView: View {
     var rating = 5
+    var size = 18
     var body: some View {
         HStack {
             ForEach(0..<rating) { _ in
                 Image(systemName: "star.fill")
+                    .resizable()
                     .renderingMode(.template)
                     .foregroundColor(Color.yellow)
+                    .scaledToFill()
+                    .frame(width: CGFloat(self.size), height: CGFloat(self.size))
             }
         }
     }
