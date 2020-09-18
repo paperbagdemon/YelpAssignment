@@ -7,12 +7,12 @@
 //
 
 import Foundation
+import Combine
 
 enum BusinessSortType: String, CaseIterable, Identifiable {
     case distance
     case rating
     var id: String { rawValue }
-
     init?(id: Int) {
         switch id {
         case 1: self = .distance
@@ -26,6 +26,9 @@ enum BusinessSortType: String, CaseIterable, Identifiable {
 final class BusinessesHomeViewModel: ObservableObject {
     private var apiClient: APIClient!
     private var locationService = LocationService.defaultService
+    var locationCancellable: AnyCancellable?
+    @Published private(set) var businesses: (value: [Business]?, error: Error?)
+    @Published private(set) var deals: (value: [Business]?, error: Error?)
     var sortType = BusinessSortType.distance {
         didSet {
            sortBusinesses()
@@ -40,14 +43,15 @@ final class BusinessesHomeViewModel: ObservableObject {
         self.init(apiClient: apiClient)
         self.businesses.value = businesses
     }
-    @Published private(set) var businesses: (value: [Business]?, error: Error?)
+    //MARK: Lifecycle
     init(apiClient: APIClient) {
         self.apiClient = apiClient
     }
-    func searchBusinesses(keyword: String, location: String, categories: [String]?, completion: (([Business]?, Error?) -> Void)? = nil) {
+    //MARK: Business services
+    func searchBusinesses(keyword: String? = nil, location: String? = nil, categories: [String]? = nil, attributes: [String]? = nil, completion: (([Business]?, Error?) -> Void)? = nil) {
         let service = SearchBusinessAPIService.init(client: self.apiClient)
-        if !location.isEmpty {
-            service.location = location
+        if let locationValue = location, !locationValue.isEmpty {
+            service.location = locationValue
         } else if let coordinates = locationService.coordinates {
             service.latitude = coordinates.latitude
             service.longitude = coordinates.longitude
@@ -60,6 +64,7 @@ final class BusinessesHomeViewModel: ObservableObject {
         service.term = keyword
         service.categories = categories
         service.radius = 40000
+        service.attributes = attributes
         service.request(completion: { data, error in
             self.businesses.value = data?.businesses
             self.businesses.error = error
@@ -82,10 +87,30 @@ final class BusinessesHomeViewModel: ObservableObject {
             return isSortedAscending ? valueA < valueB : valueA > valueB
         })
     }
+    //MARK: Deals services
+    func fetchNearbyDeals(_ coordinates: Coordinates, completion: (([Business]?, Error?) -> Void)? = nil){
+        let service = SearchBusinessAPIService.init(client: self.apiClient)
+        service.latitude = coordinates.latitude
+        service.longitude = coordinates.longitude
+        service.radius = 40000
+        service.attributes = ["deals"]
+        service.request(completion: { data, error in
+            self.deals.value = data?.businesses
+            self.deals.error = error
+            completion?(self.deals.value, self.deals.error)
+        })
+    }
+    // MARK: Location Services
     func startLocationService() {
         locationService.startService()
+        locationCancellable = locationService.$coordinates.sink { coordinates in
+            if let coordinatesValue = coordinates {
+                self.fetchNearbyDeals(coordinatesValue)
+            }
+        }
     }
     func stopLocationService() {
         locationService.stopService()
+        locationCancellable?.cancel()
     }
 }

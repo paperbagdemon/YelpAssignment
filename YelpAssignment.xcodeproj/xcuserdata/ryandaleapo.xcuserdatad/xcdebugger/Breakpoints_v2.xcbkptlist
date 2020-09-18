@@ -211,8 +211,8 @@
             filePath = "YelpAssignment/Services/LocationService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "locationManager(_:didUpdateLocations:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -227,8 +227,8 @@
             filePath = "YelpAssignment/Services/LocationService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "startService()"
             landmarkType = "7">
          </BreakpointContent>
@@ -243,8 +243,8 @@
             filePath = "YelpAssignment/Services/LocationService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "startService()"
             landmarkType = "7">
          </BreakpointContent>
@@ -285,6 +285,22 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "fetchBusinessReviews(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94BBCA74-A34B-495C-9D3D-E19EC7183A84"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YelpAssignmentTests/LiveAPIServiceTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "testFetchNearbyDeals()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

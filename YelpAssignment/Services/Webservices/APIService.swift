@@ -31,7 +31,7 @@ class APIService<T: Decodable> {
         return self.client.baseUrl.appendingPathComponent(endpoint)
     }
     func request( completion: @escaping (T?, Error?) -> Void) {
-    self.client.session.request(self.url,
+        self.client.session.request(self.url,
                          method: self.httpMethod,
                          parameters: self.parameters,
                          encoding: self.paramEncoding).validate().responseDecodable(of: T.self) { (data) in

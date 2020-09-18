@@ -59,7 +59,7 @@ class LiveAPIServiceTests: XCTestCase {
     func testBusinessListViewModel() {
         let expect = expectation(description: "searchBusinesses")
         let viewModel = BusinessesHomeViewModel(apiClient: APIClient.defaultClient)
-        viewModel.searchBusinesses(keyword: "food", location: "Makati Avenue") { businesses, error in
+        viewModel.searchBusinesses(keyword: "food", location: "Makati Avenue", categories: nil) { businesses, error in
             expect.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -87,5 +87,17 @@ class LiveAPIServiceTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(viewModel.reviews.error, viewModel.reviews.error?.localizedDescription ?? "")
         XCTAssertNotNil(viewModel.reviews.value, "BusinessListViewModel list is nil")
+    }
+    
+    func testFetchNearbyDeals() {
+        let coordinates = Coordinates(latitude: 37.7873589, longitude: -122.408227)
+        let expect = expectation(description: "fetchNearbyDeals")
+        let viewModel = BusinessesHomeViewModel(apiClient: APIClient.defaultClient)
+        viewModel.fetchNearbyDeals(coordinates, completion: { (businesses,error) in
+            expect.fulfill()
+        })
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(viewModel.deals.error, viewModel.deals.error?.localizedDescription ?? "")
+        XCTAssertNotNil(viewModel.deals.value, "BusinessListViewModel list is nil")
     }
 }

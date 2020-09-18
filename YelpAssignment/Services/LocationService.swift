@@ -24,6 +24,7 @@ struct LocationError: Error {
 class LocationService: NSObject, CLLocationManagerDelegate {
     static let defaultService = LocationService()
     let locationManager = CLLocationManager()
+    
     @Published var coordinates: Coordinates?
     func startService() {
         self.locationManager.requestAlwaysAuthorization()
