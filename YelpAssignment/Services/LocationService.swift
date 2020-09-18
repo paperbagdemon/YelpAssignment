@@ -8,16 +8,18 @@
 
 import Foundation
 import CoreLocation
-
-struct LocationError: Error {
+    
+struct LocationError: LocalizedError {
     let message: String
 
     init(_ message: String) {
         self.message = message
     }
 
-    public var localizedDescription: String {
-        return message
+    var errorDescription: String? {
+        get {
+            return self.message
+        }
     }
 }
 

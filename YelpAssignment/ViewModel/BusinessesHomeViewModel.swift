@@ -57,7 +57,7 @@ final class BusinessesHomeViewModel: ObservableObject {
             service.longitude = coordinates.longitude
         } else {
             businesses.value = nil
-            businesses.error = LocationError("location is not provided")
+            businesses.error = LocationError("Location is not provided, please enter a location in search bar or enable location services.")
             completion?(businesses.value, businesses.error)
             return
         }

@@ -96,6 +96,21 @@ struct BusinessDetailView: View {
                             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                             Spacer()
                         }
+                        HStack {
+                            Button(action: {
+                                if let url = URL(string: business.url ?? ""), UIApplication.shared.canOpenURL(url) {
+                                    UIApplication.shared.open(url)
+                                }
+                            }, label: {
+                                HStack {
+                                    Image(systemName: "globe")
+                                    Text("Visit Website")
+                                    .font(.system(size: 14))
+                                }
+                            })
+                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                            Spacer()
+                        }
                         ReviewsView(reviews: viewModel.reviews.value)
                         Spacer()
                     }

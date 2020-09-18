@@ -16,30 +16,32 @@ struct ReviewsView: View {
     }
     func buildReviewRow(review: Review) -> AnyView {
         return AnyView(
-            VStack {
+            VStack (spacing: 2) {
+                Spacer()
+                HStack {
+                    Text(review.user.name)
+                    .font(.system(size: 14))
+                    .bold()
+                    .foregroundColor(Color.red)
+                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
+                    .lineLimit(1)
+                    Spacer()
+                }
                 HStack(spacing: 20) {
                     VStack {
-                        HStack {
-                            Text(review.user.name)
-                            .font(.system(size: 14))
-                            .bold()
-                            .foregroundColor(Color.red)
-                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                            .lineLimit(1)
-                            Spacer()
+                        GeometryReader { geo in
+                            WebImage(url: URL(string: review.user.imageURL ?? ""))
+                            .resizable()
+                            .placeholder(Image(systemName: "person"))
+                            .indicator(.activity)
+                            .transition(.fade)
+                            .scaledToFill()
+                            .frame(width: 75, height: 75)
+                            .clipped()
+                            .cornerRadius(3)
                         }
-                        WebImage(url: URL(string: review.user.imageURL ?? ""))
-                        .resizable()
-                        .placeholder(Image(systemName: "person"))
-                        .indicator(.activity)
-                        .transition(.fade)
-                        .scaledToFill()
-                        .frame(width: 60, height: 60)
-                        .clipped()
-                        .padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 0))
-                        .cornerRadius(3)
-                    }
-                    .frame(minWidth: 60, maxWidth: 60, minHeight: 100, idealHeight: 120, maxHeight: 180)
+                    }.frame(width: 75, height: 75)
+                    .padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 0))
                     VStack {
                         HStack {
                             StarRatingView(rating: Double(review.rating), size: 14)
@@ -50,10 +52,12 @@ struct ReviewsView: View {
                             .font(.system(size: 14))
                             Spacer()
                         }
+                        Spacer()
                     }
                 }
                 Divider()
             }
+            .frame(maxWidth: .infinity, maxHeight: 130)
         )
     }
     func buildBodyView() -> AnyView {
@@ -115,6 +119,16 @@ struct ReviewsView_Previews: PreviewProvider {
         imageURL: "https://vignette.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg/revision/latest?cb=20190328215620",
          name: "Cattastropghe"),
           text: "juju\njiji\njerjer",
+          timeCreated: "2016-08-29 00:41:13",
+          url: "https://www.yelp.com/biz/la-palma-mexicatessen-san-francisco?hrid=hp8hAJ-AnlpqxCCu7kyCWA&adjust_creative" +
+            "=0sidDfoTIHle5vvHEBvF0w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=0sidDfoTIHle5vvHEBvF0w"),
+        Review.init(id: "3233",
+          rating: 4, user: User.init(id: "3232",
+        profileURL: "https://vignette.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg/revision/latest?cb=20190328215620",
+        imageURL: "https://vignette.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg/revision/latest?cb=20190328215620",
+         name: "Catto"),
+          text: "Went back again to this place since the last time i visited the bay area 5 months ago," +
+            " and nothing has changed. Still the sketchy Mission, Still the cashier...",
           timeCreated: "2016-08-29 00:41:13",
           url: "https://www.yelp.com/biz/la-palma-mexicatessen-san-francisco?hrid=hp8hAJ-AnlpqxCCu7kyCWA&adjust_creative" +
             "=0sidDfoTIHle5vvHEBvF0w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=0sidDfoTIHle5vvHEBvF0w")])

@@ -7,10 +7,18 @@
 //
 
 import SwiftUI
+import Combine
+
+class BusinessesHomeViewEvents: ObservableObject {
+    @Published var alertMessage = ""
+    var searchBusinessesCancellable: AnyCancellable?
+}
 
 struct BusinessesHomeView: View {
     @ObservedObject var viewModel: BusinessesHomeViewModel
     @State var isSortTypeShown = false
+    @State var isAlertShown = false
+    @ObservedObject var events = BusinessesHomeViewEvents()
     var body: some View {
         NavigationView {
             ZStack {
@@ -24,7 +32,7 @@ struct BusinessesHomeView: View {
                     Spacer()
                 }
                 VStack {
-                    SearchBarView(placeholder: "Name / Address / Cuisine",
+                    SearchBarView(placeholder: "Find",
                                   onTextChanged: { term, location, categories in
                                     self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
                     })
@@ -38,6 +46,15 @@ struct BusinessesHomeView: View {
         }
         .onAppear {
             self.viewModel.startLocationService()
+            self.events.searchBusinessesCancellable = self.viewModel.$businesses.sink { result in
+                if let errorMessage = result.error?.localizedDescription {
+                    self.isAlertShown = true
+                    self.events.alertMessage = errorMessage
+                }
+            }
+        }
+        .alert(isPresented: self.$isAlertShown) { () -> Alert in
+            Alert(title: Text("We encountered a problem"), message: Text(self.events.alertMessage), dismissButton: .default(Text("OK")))
         }
     }
     func buildDealsView() -> AnyView {
@@ -128,7 +145,8 @@ struct BusinessesHomeView: View {
         var returnView: AnyView
         if viewModel.businesses.error != nil {
             returnView = AnyView(
-                    Text("We encountered a problem")
+                Image("gir6")
+                .scaledToFill()
             )
         } else {
             if let businesses = viewModel.businesses.value {
@@ -155,7 +173,7 @@ struct BusinessesHomeView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(EdgeInsets.init(top: 60, leading: 20, bottom: 40, trailing: 20))
                         .opacity(0.15)
-                        Text("Search establishments")
+                        Text("Search businesses")
                         .bold()
                         .shadow(color: .white, radius: 1)
                         .font(.system(size: 20))
