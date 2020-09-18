@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Business: Identifiable, Decodable {
+struct Business: Identifiable, Decodable, Equatable, Hashable {
     var id: String?
     var name: String = ""
     var imageUrl: String?
@@ -44,6 +44,12 @@ struct Business: Identifiable, Decodable {
         case location
         case transactions
         case hours
+    }
+    static func ==(lhs: Business, rhs: Business) -> Bool {
+        return lhs.id == rhs.id && lhs.name == rhs.name
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

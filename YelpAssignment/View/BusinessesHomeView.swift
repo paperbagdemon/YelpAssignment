@@ -15,7 +15,9 @@ struct BusinessesHomeView: View {
         NavigationView {
             ZStack {
                 VStack {
-                    HeaderView()
+                    ZStack {
+                        buildDealsView()
+                    }
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 220, maxHeight: 220)
                     buildContentView()
                     .padding(EdgeInsets.init(top: 30, leading: 0, bottom: 0, trailing: 0))
@@ -36,6 +38,17 @@ struct BusinessesHomeView: View {
         }
         .onAppear {
             self.viewModel.startLocationService()
+        }
+    }
+    func buildDealsView() -> AnyView {
+        if let deals = self.viewModel.deals.value {
+            return AnyView (
+                DealsBannerView(deals: deals)
+            )
+        } else {
+            return AnyView (
+                HeaderView()
+            )
         }
     }
     func buildSortSelection() -> AnyView {
@@ -137,7 +150,7 @@ struct BusinessesHomeView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(EdgeInsets.init(top: 60, leading: 20, bottom: 40, trailing: 20))
                         .opacity(0.15)
-                        Text("Search to start exploring")
+                        Text("Search establishments")
                         .bold()
                         .shadow(color: .white, radius: 1)
                         .font(.system(size: 20))
@@ -153,7 +166,7 @@ struct BusinessesHomeView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         BusinessesHomeView(viewModel: BusinessesHomeViewModel(apiClient: APIClient.defaultClient,
-        businesses: [Stub.sampleBusiness(), Stub.sampleBusiness(),
-        Stub.sampleBusiness(), Stub.sampleBusiness()]))
+                                                              businesses: [Stub.sampleBusiness(name: "Looo"), Stub.sampleBusiness(name: "Lalala"),
+                                                                           Stub.sampleBusiness(name: "Lii"), Stub.sampleBusiness(name: "Linsdsd")]))
     }
 }

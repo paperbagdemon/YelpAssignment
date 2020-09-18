@@ -2,7 +2,7 @@
   "commitish" : "1.5.0",
   "iOS" : [
     {
-      "hash" : "1a1d9ca263b298bc35c0541d8909970b7680698cbd3e82915bbaf79b04534b04",
+      "hash" : "db95487c0cb8425c4da8c26e154c1d6857e9d1d2cbfd435fb94aa435d898a525",
       "name" : "SDWebImageSwiftUI",
       "linking" : "dynamic",
       "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"

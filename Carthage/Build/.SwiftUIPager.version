@@ -1,0 +1,11 @@
+{
+  "commitish" : "1.11.0",
+  "iOS" : [
+    {
+      "hash" : "e5df74f2b206ca0d7c228783d4ec3a90aa5a6312ca67cf840ddbd0756ec19f00",
+      "name" : "SwiftUIPager",
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+    }
+  ]
+}

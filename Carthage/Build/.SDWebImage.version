@@ -3,12 +3,12 @@
   "iOS" : [
     {
       "name" : "SDWebImageMapKit",
-      "hash" : "0057c4b50cc0c96cb29b0d7eaca7811a2b539c7afa2d9f5733f0f5455d00c38f",
+      "hash" : "a97bcb651713fbeddc46281efdfbef7e3edb1c2ccf55243cec14acd03d694279",
       "linking" : "dynamic"
     },
     {
       "name" : "SDWebImage",
-      "hash" : "80ba34f43d1a71dee3b863d4f64db24b2e4816e84d032f43697ecf6c2fe60cc0",
+      "hash" : "87c8f7818338e8877c94113b1fab17e27d7ff1e4e2cff4ef7ded45d8087c7d63",
       "linking" : "dynamic"
     }
   ]

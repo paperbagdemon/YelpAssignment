@@ -7,21 +7,54 @@
 //
 
 import SwiftUI
+import SwiftUIPager
+import SDWebImageSwiftUI
 
 struct DealsBannerView: View {
     var deals: [Business]?
+    @State var page = 0
+    let timer = Timer.publish(every: 12, on: .main, in: .common).autoconnect()
     var body: some View {
-        buildBodyView()
+        ZStack {
+            self.buildPagerView()
+                .onReceive(timer) { _ in
+                    withAnimation {
+                        if let deals = self.deals {
+                            if self.page < deals.count - 1 {
+                                self.page += 1
+                            } else {
+                                self.page = 0
+                            }
+                        }
+                    }
+            }
+            VStack {
+                HStack {
+                    Text("Explore deals near you")
+                    .font(.system(size: 24))
+                    .bold()
+                    .foregroundColor(Color.white)
+                    .shadow(color: Color.black, radius: 2, x: 1, y: 1)
+                    .padding()
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
     }
-    func buildBodyView() -> AnyView {
+    func buildPagerView() -> AnyView {
         if let deals = self.deals {
             if !deals.isEmpty {
                 return AnyView(
-                    ScrollView {
-                        ForEach(deals, id: \.id) { deal in
-                            Text(deal.name)
-                        }
+                    Pager(page: $page,
+                          data: deals,
+                          id: \.self) {
+                            self.buildBannerView(business: $0)
                     }
+                    .pagingPriority(.simultaneous)
+                    .loopPages()
+                    .itemSpacing(10)
+                    .background(Color.gray.opacity(0.2))
                 )
             } else {
                 return AnyView(
@@ -33,6 +66,39 @@ struct DealsBannerView: View {
                 EmptyView()
             )
         }
+    }
+    func buildBannerView(business: Business) -> AnyView {
+        return AnyView (
+            Button(action: {
+
+            }, label: {
+                ZStack {
+                    GeometryReader { geo in
+                        WebImage(url: URL(string: business.imageUrl ?? ""))
+                        .resizable()
+                        .placeholder(Image("shop"))
+                        .indicator(.activity)
+                        .transition(.fade)
+                        .scaledToFill()
+                        .frame(width: geo.size.width)
+                    }
+                    VStack {
+                        HStack{
+                            Text(business.name)
+                            .font(.system(size: 18))
+                            .bold()
+                            .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+                            .shadow(color: Color.black, radius: 2, x: 1, y: 1)
+                            .padding(EdgeInsets.init(top: 50, leading: 30, bottom: 0, trailing: 0))
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+            })
+
+
+        )
     }
 }
 

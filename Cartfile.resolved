@@ -1,3 +1,4 @@
 github "Alamofire/Alamofire" "5.2.2"
 github "SDWebImage/SDWebImage" "5.9.1"
 github "SDWebImage/SDWebImageSwiftUI" "1.5.0"
+github "fermoya/SwiftUIPager" "1.11.0"
