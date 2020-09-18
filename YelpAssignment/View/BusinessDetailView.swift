@@ -40,9 +40,11 @@ struct BusinessDetailView: View {
                                 HStack {
                                     Text(business.name)
                                     .font(.system(size: 24))
-                                        .fontWeight(.bold)
+                                    .bold()
                                     .padding(EdgeInsets.init(top: 120, leading: 20, bottom: 0, trailing: 0))
-                                        .foregroundColor(Color.white)
+                                    .foregroundColor(Color.white)
+                                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+                                    .shadow(color: Color.black, radius: 2, x: 1, y: 1)
                                     Spacer()
                                 }
                                 HStack {

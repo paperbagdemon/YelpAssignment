@@ -10,14 +10,19 @@ import SwiftUI
 import SwiftUIPager
 import SDWebImageSwiftUI
 
+class EventsHolder: ObservableObject {
+    @Published var timer = Timer.publish(every: 12, on: .main, in: .common).autoconnect()
+}
+
 struct DealsBannerView: View {
     var deals: [Business]?
     @State var page = 0
-    let timer = Timer.publish(every: 12, on: .main, in: .common).autoconnect()
+    @State var showingDetail = false
+    @ObservedObject var eventsHolder = EventsHolder()
     var body: some View {
         ZStack {
             self.buildPagerView()
-                .onReceive(timer) { _ in
+                .onReceive(eventsHolder.timer) { _ in
                     withAnimation {
                         if let deals = self.deals {
                             if self.page < deals.count - 1 {
@@ -39,6 +44,15 @@ struct DealsBannerView: View {
                     Spacer()
                 }
                 Spacer()
+            }
+            //navigation workaround
+            //webimage not playing well inside buttons
+            Button(action: {
+                self.showingDetail.toggle()
+            }, label: {
+                Rectangle().opacity(0.01)
+            }).sheet(isPresented: self.$showingDetail) {
+                self.buildBusinessDetailView()
             }
         }
     }
@@ -67,21 +81,36 @@ struct DealsBannerView: View {
             )
         }
     }
+    func buildBusinessDetailView() -> AnyView {
+        if let business = self.deals?[self.page] {
+            return AnyView(
+                BusinessDetailView(
+                viewModel: BusinessDetailViewModel(apiClient: APIClient.defaultClient,
+                                                   businessID: business.id, business: business))
+                    .onAppear(perform: {
+                        self.eventsHolder.timer.upstream.connect().cancel()
+                    })
+                    .onDisappear(perform: {
+                        self.eventsHolder.timer = Timer.publish(every: 12, on: .main, in: .common).autoconnect()
+                    })
+            )
+        } else {
+            return AnyView(
+                EmptyView()
+            )
+        }
+    }
     func buildBannerView(business: Business) -> AnyView {
-        return AnyView (
-            Button(action: {
-
-            }, label: {
-                ZStack {
-                    GeometryReader { geo in
-                        WebImage(url: URL(string: business.imageUrl ?? ""))
-                        .resizable()
-                        .placeholder(Image("shop"))
-                        .indicator(.activity)
-                        .transition(.fade)
-                        .scaledToFill()
-                        .frame(width: geo.size.width)
-                    }
+        return AnyView(
+            ZStack {
+                GeometryReader { geo in
+                    WebImage(url: URL(string: business.imageUrl ?? ""))
+                    .resizable()
+                    .placeholder(Image("shop"))
+                    .indicator(.activity)
+                    .transition(.fade)
+                    .scaledToFill()
+                    .frame(width: geo.size.width)
                     VStack {
                         HStack{
                             Text(business.name)
@@ -95,9 +124,7 @@ struct DealsBannerView: View {
                         Spacer()
                     }
                 }
-            })
-
-
+            }
         )
     }
 }

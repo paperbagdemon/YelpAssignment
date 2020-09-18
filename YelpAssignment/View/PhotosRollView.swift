@@ -24,7 +24,6 @@ struct PhotosRollView: View {
                             ForEach(0..<photos.count) { index in
                                 WebImage(url: URL(string: photos[index]))
                                 .resizable()
-                                .placeholder(Image(systemName: "list.bullet.below.rectangle"))
                                 .indicator(.activity)
                                 .transition(.fade)
                                 .scaledToFill()

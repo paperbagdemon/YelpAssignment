@@ -9,7 +9,7 @@
 import Foundation
 
 struct Business: Identifiable, Decodable, Equatable, Hashable {
-    var id: String?
+    var id: String
     var name: String = ""
     var imageUrl: String?
     var isClosed: Bool?

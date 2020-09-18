@@ -78,15 +78,20 @@ struct BusinessesHomeView: View {
         return AnyView(
             VStack {
                 ZStack {
-                    HStack {
+                    HStack (spacing:2) {
                         Spacer()
                         Button(action: {
                             self.viewModel.isSortedAscending.toggle()
                         }, label: {
                             Image(systemName: self.viewModel.isSortedAscending ? "arrowtriangle.up" : "arrowtriangle.down")
+                            .frame(width: 30, height: 30)
+                            .contentShape(Rectangle())
                         })
+                        .background(Color.white)
+                        .zIndex(3)
+                        
                         Button(action: {
-
+                            
                         }, label: {
                             HStack {
                                 Button(action: {
@@ -112,7 +117,7 @@ struct BusinessesHomeView: View {
                 List(businesses) { business in
                     NavigationLink(destination: BusinessDetailView(
                         viewModel: BusinessDetailViewModel(apiClient: APIClient.defaultClient,
-                        businessID: business.id!, business: business))) {
+                        businessID: business.id, business: business))) {
                         BusinessListRowView(business: business)
                     }
                 }
