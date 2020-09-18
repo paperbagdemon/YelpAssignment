@@ -12,11 +12,11 @@ import XCTest
 class LiveAPIServiceTests: XCTestCase {
     func testSearchBusiness() {
         let expect = expectation(description: "businessWebservice")
-        let searchBusiness = SearchBusinessAPIService(client: APIClient.defaultClient)
-        searchBusiness.location = "Makati Avenue"
+        let service = SearchBusinessAPIService(client: APIClient.defaultClient)
+        service.location = "Makati Avenue"
         var serviceError: Error?
         var serviceResult: SearchBusinessAPIServiceResult?
-        searchBusiness.request { result, error -> Void in
+        service.request { result, error -> Void in
             serviceResult = result
             serviceError = error
             expect.fulfill()
@@ -28,10 +28,10 @@ class LiveAPIServiceTests: XCTestCase {
     
     func testFecthBusinessDetail() {
         let expect = expectation(description: "businessDetailsWebservice")
-        let businessInfoService = BusinessDetailAPIService(client: APIClient.defaultClient, businessId: "sFKF4eyP6DKdr2o1qpykig")
+        let service = BusinessDetailAPIService(client: APIClient.defaultClient, businessId: "sFKF4eyP6DKdr2o1qpykig")
         var serviceError: Error?
         var serviceResult: Business?
-        businessInfoService.request { (result, error) in
+        service.request { (result, error) in
             serviceResult = result
             serviceError = error
             expect.fulfill()
@@ -41,12 +41,12 @@ class LiveAPIServiceTests: XCTestCase {
         XCTAssertNotNil(serviceResult, "BusinessDetailAPIService call failed")
     }
     
-    func testFetchReviews(){
+    func testFetchReviews() {
         let expect = expectation(description: "reviewsWebservice")
-        let businessInfoService = ReviewAPIService(client: APIClient.defaultClient, businessId: "sFKF4eyP6DKdr2o1qpykig")
+        let service = ReviewAPIService(client: APIClient.defaultClient, businessId: "sFKF4eyP6DKdr2o1qpykig")
         var serviceError: Error?
         var serviceResult: ReviewAPIServiceResult?
-        businessInfoService.request { (result, error) in
+        service.request { (result, error) in
             serviceResult = result
             serviceError = error
             expect.fulfill()
@@ -54,5 +54,38 @@ class LiveAPIServiceTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(serviceError, serviceError?.localizedDescription ?? "")
         XCTAssertNotNil(serviceResult, "ReviewAPIService is nil")
+    }
+    
+    func testBusinessListViewModel() {
+        let expect = expectation(description: "searchBusinesses")
+        let viewModel = BusinessesHomeViewModel(apiClient: APIClient.defaultClient)
+        viewModel.searchBusinesses(keyword: "food", location: "Makati Avenue") { businesses, error in
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(viewModel.businesses.error, viewModel.businesses.error?.localizedDescription ?? "")
+        XCTAssertNotNil(viewModel.businesses.value, "BusinessListViewModel list is nil")
+    }
+    
+    func testFetchBusinessDetail() {
+        let expect = expectation(description: "fetchBusinessDetail")
+        let viewModel = BusinessDetailViewModel(apiClient: APIClient.defaultClient, businessID: Stub.testBusinessID, business: nil, reviews: nil)
+        viewModel.fetchBusinessDetail { (business, error) in
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(viewModel.business.error, viewModel.business.error?.localizedDescription ?? "")
+        XCTAssertNotNil(viewModel.business.value, "BusinessListViewModel list is nil")
+    }
+    
+    func testFetchBusinessReviews() {
+        let expect = expectation(description: "fetchBusinessReviews")
+        let viewModel = BusinessDetailViewModel(apiClient: APIClient.defaultClient, businessID: Stub.testBusinessID, business: nil, reviews: nil)
+        viewModel.fetchBusinessReviews { (business, error) in
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        XCTAssertNil(viewModel.reviews.error, viewModel.reviews.error?.localizedDescription ?? "")
+        XCTAssertNotNil(viewModel.reviews.value, "BusinessListViewModel list is nil")
     }
 }

@@ -30,7 +30,7 @@ struct ReviewsView: View {
                         }
                         WebImage(url: URL(string: review.user.imageURL ?? ""))
                         .resizable()
-                        .placeholder(Image(systemName: "mustache.fill"))
+                        .placeholder(Image(systemName: "person"))
                         .indicator(.activity)
                         .transition(.fade)
                         .scaledToFill()
@@ -42,11 +42,14 @@ struct ReviewsView: View {
                     .frame(minWidth: 60, maxWidth: 60, minHeight: 100, idealHeight: 120, maxHeight: 180)
                     VStack {
                         HStack {
-                            StarRatingView(rating: review.rating, size: 14)
+                            StarRatingView(rating: Double(review.rating), size: 14)
                             Spacer()
                         }
-                        Text(review.text)
-                        .font(.system(size: 14))
+                        HStack {
+                            Text(review.text)
+                            .font(.system(size: 14))
+                            Spacer()
+                        }
                     }
                 }
                 Divider()
@@ -55,21 +58,32 @@ struct ReviewsView: View {
     }
     func buildBodyView() -> AnyView {
         if let reviews = self.reviews {
-            return AnyView(
-                VStack {
-                    HStack {
+            if !reviews.isEmpty {
+                return AnyView(
+                    VStack {
+                        HStack {
+                            Image(systemName: "captions.bubble")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            Text("Reviews")
+                            .bold()
+                        }
+                        .offset(x: 0, y: 10)
+                        ForEach(reviews) { review in
+                            self.buildReviewRow(review: review)
+                        }
+                    }
+                )
+            } else {
+                return AnyView(
+                    VStack {
                         Image(systemName: "captions.bubble")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        Text("Reviews")
-                        .bold()
+                            .resizable()
+                            .frame(width: 35, height: 35)
+                        Text("There are no reviews at the moment")
                     }
-                    .offset(x: 0, y: 10)
-                    ForEach(reviews) { review in
-                        self.buildReviewRow(review: review)
-                    }
-                }
-            )
+                )
+            }
         } else {
             return AnyView(
                 VStack {
@@ -100,8 +114,7 @@ struct ReviewsView_Previews: PreviewProvider {
         profileURL: "https://vignette.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg/revision/latest?cb=20190328215620",
         imageURL: "https://vignette.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg/revision/latest?cb=20190328215620",
          name: "Cattastropghe"),
-          text: "Went back again to this place since the last time i visited the bay area 5 months ago," +
-            " and nothing has changed. Still the sketchy Mission, Still the cashier...",
+          text: "juju\njiji\njerjer",
           timeCreated: "2016-08-29 00:41:13",
           url: "https://www.yelp.com/biz/la-palma-mexicatessen-san-francisco?hrid=hp8hAJ-AnlpqxCCu7kyCWA&adjust_creative" +
             "=0sidDfoTIHle5vvHEBvF0w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=0sidDfoTIHle5vvHEBvF0w")])

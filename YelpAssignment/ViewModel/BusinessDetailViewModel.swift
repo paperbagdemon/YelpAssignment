@@ -10,32 +10,32 @@ import Foundation
 
 final class BusinessDetailViewModel: ObservableObject {
     private var apiClient: APIClient!
-    @Published private(set) var business: Business?
-    @Published private(set) var reviews: [Review]?
-    @Published private(set) var detailServiceError: Error?
-    @Published private(set) var reviewsServiceError: Error?
+    @Published private(set) var business: (value: Business?,error: Error?)
+    @Published private(set) var reviews: (value: [Review]?,error: Error?)
     private(set) var businessID: String
     init(apiClient: APIClient, businessID: String) {
         self.businessID = businessID
         self.apiClient = apiClient
     }
-    func fetchBusinessDetail() {
+    func fetchBusinessDetail(completion: ((Business?, Error?) -> Void)? = nil) {
         let service = BusinessDetailAPIService.init(client: self.apiClient, businessId: self.businessID)
         service.request(completion: { data, error in
-            self.business = data
-            self.detailServiceError = error
+            self.business.value = data
+            self.business.error = error
+            completion?(data, error)
         })
     }
-    func fetchBusinessReviews() {
+    func fetchBusinessReviews(completion: (([Review]?, Error?) -> Void)? = nil) {
         let service = ReviewAPIService.init(client: self.apiClient, businessId: self.businessID)
         service.request(completion: { data, error in
-            self.reviews = data?.reviews
-            self.reviewsServiceError = error
+            self.reviews.value = data?.reviews
+            self.reviews.error = error
+            completion?(data?.reviews, error)
         })
     }
     convenience init(apiClient: APIClient, businessID: String, business: Business? = nil, reviews: [Review]? = nil) {
         self.init(apiClient: apiClient, businessID: businessID)
-        self.business = business
-        self.reviews = reviews
+        self.business.value = business
+        self.reviews.value = reviews
     }
 }

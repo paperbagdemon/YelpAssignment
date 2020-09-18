@@ -27,7 +27,7 @@ struct BusinessListRowView: View {
                 .bold()
                 HStack(spacing: 0) {
                     PriceView(price: business.price)
-                    StarRatingView(rating: Int(business.rating ?? 0), size: 12)
+                    StarRatingView(rating: business.rating ?? 0, size: 12)
                 }
                 CategoriesView(categories: business.categories)
                 Text(business.displayAddress(delimiter: ","))
@@ -43,9 +43,9 @@ struct BusinessListRowView: View {
 struct BusinessListRowView_Previews: PreviewProvider {
     static var previews: some View {
         BusinessListRowView(business: Business(id: "sFKF4eyP6DKdr2o1qpykig", name: "Lola Basyang's", imageUrl: "https://s3-media1.fl.yelpcdn.com/bphoto/zVCoHsMZebOXgM9uZDIWKw/o.jpg",
-            isClosed: nil, url: nil, price: "₱₱", phone: "+639228177570",
-            displayPhone: "+639228177570", photos: nil, rating: 4,
-            reviewCount: nil, categories: [Category.init(alias: "Filipino", title: "Filipino"),
+            isClosed: nil, url: nil, price: "₱₱₱", phone: "+639228177570",
+            displayPhone: "+639228177570", photos: nil, rating: 4.5,
+            reviewCount: nil, categories: [Category.init(alias: "cocktailbar", title: "Filipino"),
             Category.init(alias: "Seafood", title: "Seafood"),
             Category.init(alias: "Fruit", title: "Fruit"),
             Category.init(alias: "Meat", title: "Meat"),

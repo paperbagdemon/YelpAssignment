@@ -61,7 +61,7 @@ struct BusinessesHomeView: View {
             )
         }
     }
-    func buildBusinessListView() -> AnyView {
+    func buildBusinessListView(businesses: [Business]) -> AnyView {
         return AnyView(
             VStack {
                 ZStack {
@@ -115,7 +115,7 @@ struct BusinessesHomeView: View {
         } else {
             if let businesses = viewModel.businesses.value {
                 if !businesses.isEmpty {
-                    returnView = buildBusinessListView()
+                    returnView = buildBusinessListView(businesses: businesses)
                 } else {
                     returnView = AnyView(
                         ZStack {

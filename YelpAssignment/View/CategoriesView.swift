@@ -21,7 +21,7 @@ struct CategoriesView: View {
                     ScrollView(.horizontal) {
                         HStack(spacing: 12) {
                             ForEach(categories) { category in
-                                Text(category.alias ?? "")
+                                Text(category.alias)
                                 .font(.system(size: CGFloat(self.size)))
                             }
                         }

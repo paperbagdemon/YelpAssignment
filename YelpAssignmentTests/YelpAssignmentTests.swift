@@ -30,5 +30,10 @@ class YelpAssignmentTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testSuggesCAtegories(){
+        let categories = Category.suggestCategory(term: "local")
+        XCTAssert(categories.count > 0)
+    }
 
 }

@@ -22,7 +22,7 @@ struct BusinessDetailView: View {
         .navigationBarHidden(true)
     }
     func buildBodyView() -> AnyView {
-        if let business = viewModel.business {
+        if let business = viewModel.business.value {
             return AnyView(
                 ScrollView {
                     VStack{
@@ -46,7 +46,7 @@ struct BusinessDetailView: View {
                                     Spacer()
                                 }
                                 HStack {
-                                    StarRatingView(rating: Int(business.rating ?? 0))
+                                    StarRatingView(rating: business.rating ?? 0)
                                     .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 10, trailing:0))
                                     Spacer()
                                 }
@@ -90,11 +90,11 @@ struct BusinessDetailView: View {
                             .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 20))
                         }
                         HStack {
-                            PhoneNumbersView(phoneNumber: viewModel.business?.phone)
+                            PhoneNumbersView(phoneNumber: viewModel.business.value?.phone)
                             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                             Spacer()
                         }
-                        ReviewsView(reviews: viewModel.reviews)
+                        ReviewsView(reviews: viewModel.reviews.value)
                         Spacer()
                     }
                 }
