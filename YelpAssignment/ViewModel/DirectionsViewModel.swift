@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import MapboxDirections
 import MapboxGeocoder
+import Mapbox
 
 final class DirectionsViewModel: ObservableObject {
     private var bag = Set<AnyCancellable>()
@@ -58,3 +59,4 @@ final class DirectionsViewModel: ObservableObject {
         self.toCoordinates = toCoordinates
     }
 }
+

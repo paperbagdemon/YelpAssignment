@@ -171,10 +171,17 @@ struct BusinessSearchBarView: View {
         case .term:
             suggestStrings = []
         case .category:
+            if !self.isCategoryShown {
+                return AnyView(EmptyView())
+            }
             suggestStrings = Category.suggestCategory(term: self.viewModel.categoryQuery).map({ value -> String in
                 return value.alias
             })
         case .location:
+            if !self.isLocationSearchShown {
+                return AnyView(EmptyView())
+            }
+
             suggestStrings = self.viewModel.locations.value?.map({ value -> String in
                 return value.qualifiedName ?? ""
             })
