@@ -84,7 +84,7 @@ struct BusinessDetailView: View {
                         HStack {
                             VStack {
                                 Text(business.displayAddress())
-                                    .font(.system(size: 14))
+                                .font(.system(size: 14))
                                 .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
                             }
                             Spacer()

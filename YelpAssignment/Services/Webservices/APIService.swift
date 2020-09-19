@@ -11,7 +11,7 @@ import Alamofire
 import Combine
 
 class APIService<T: Decodable> {
-    private let client: APIClient
+    private let client: APIClientProtocol
     init(client: APIClient) {
         self.client = client
     }

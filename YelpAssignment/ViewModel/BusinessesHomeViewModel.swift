@@ -49,15 +49,17 @@ final class BusinessesHomeViewModel: ObservableObject {
     }
     //MARK: Business services
     func searchBusinesses(keyword: String? = nil, location: String? = nil, categories: [String]? = nil, attributes: [String]? = nil, completion: (([Business]?, Error?) -> Void)? = nil) {
+        guard let keyword = keyword?.trimmingCharacters(in: .whitespacesAndNewlines), !keyword.isEmpty else {
+            return
+        }
         let service = SearchBusinessAPIService.init(client: self.apiClient)
-        if let locationValue = location, !locationValue.isEmpty {
+        if let locationValue = location?.trimmingCharacters(in: .whitespacesAndNewlines), !locationValue.isEmpty {
             service.location = locationValue
         } else if let coordinates = locationService.coordinates {
             service.latitude = coordinates.latitude
             service.longitude = coordinates.longitude
         } else {
-            businesses.value = nil
-            businesses.error = LocationError("Location is not provided, please enter a location in search bar or enable location services.")
+            businesses = (nil, LocationError("Location is not provided, please enter a location in search bar or enable location services."))
             completion?(businesses.value, businesses.error)
             return
         }
@@ -66,8 +68,7 @@ final class BusinessesHomeViewModel: ObservableObject {
         service.radius = 40000
         service.attributes = attributes
         service.request(completion: { data, error in
-            self.businesses.value = data?.businesses
-            self.businesses.error = error
+            self.businesses = (data?.businesses, error)
             self.sortBusinesses()
             completion?(data?.businesses, error)
         })
@@ -95,8 +96,7 @@ final class BusinessesHomeViewModel: ObservableObject {
         service.radius = 40000
         service.attributes = ["deals"]
         service.request(completion: { data, error in
-            self.deals.value = data?.businesses
-            self.deals.error = error
+            self.deals = (data?.businesses, error )
             completion?(self.deals.value, self.deals.error)
         })
     }

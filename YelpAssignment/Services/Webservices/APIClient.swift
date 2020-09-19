@@ -9,7 +9,13 @@
 import Foundation
 import Alamofire
 
-class APIClient {
+protocol APIClientProtocol {
+    var apiKey: String { get set }
+    var baseUrl: URL { get set }
+    var session: Alamofire.Session { get set }
+}
+
+class APIClient: APIClientProtocol {
     static let defaultClient = APIClient(apiKey: Setting.yelpAPIKey, baseURL: URL(string: Setting.yelpBaseURL)!)
     var apiKey: String
     var baseUrl: URL

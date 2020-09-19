@@ -20,16 +20,14 @@ final class BusinessDetailViewModel: ObservableObject {
     func fetchBusinessDetail(completion: ((Business?, Error?) -> Void)? = nil) {
         let service = BusinessDetailAPIService.init(client: self.apiClient, businessId: self.businessID)
         service.request(completion: { data, error in
-            self.business.value = data
-            self.business.error = error
+            self.business = (data, error)
             completion?(data, error)
         })
     }
     func fetchBusinessReviews(completion: (([Review]?, Error?) -> Void)? = nil) {
         let service = ReviewAPIService.init(client: self.apiClient, businessId: self.businessID)
         service.request(completion: { data, error in
-            self.reviews.value = data?.reviews
-            self.reviews.error = error
+            self.reviews = (data?.reviews, error)
             completion?(data?.reviews, error)
         })
     }
