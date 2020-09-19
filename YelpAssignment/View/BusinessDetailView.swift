@@ -28,7 +28,7 @@ struct BusinessDetailView: View {
     func buildBusinessDetailView() -> AnyView {
         return AnyView (
             DirectionsView(viewModel: DirectionsViewModel(
-                fromCoordinates: viewModel.locationService.coordinates,
+                fromCoordinates: viewModel.locationService.coordinates != nil ? viewModel.locationService.coordinates :  self.viewModel.business.value?.coordinates,
                 toCoordinates: self.viewModel.business.value?.coordinates))
         )
     }

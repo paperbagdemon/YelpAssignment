@@ -9,16 +9,12 @@
 import SwiftUI
 import Combine
 
-class BusinessesHomeViewEvents: ObservableObject {
-    @Published var alertMessage = ""
-    var searchBusinessesCancellable: AnyCancellable?
-}
-
 struct BusinessesHomeView: View {
     @ObservedObject var viewModel: BusinessesHomeViewModel
+    @ObservedObject private var searchbarViewModel = BusinessSearchBarViewModel(locationService: LocationService.defaultService)
     @State var isSortTypeShown = false
     @State var isAlertShown = false
-    @ObservedObject var events = BusinessesHomeViewEvents()
+    @State var alertMessage = ""
     var body: some View {
         NavigationView {
             ZStack {
@@ -32,9 +28,8 @@ struct BusinessesHomeView: View {
                     Spacer()
                 }
                 VStack {
-                    SearchBarView(placeholder: "Find",
-                                  onTextChanged: { term, location, categories in
-                                    self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
+                    BusinessSearchBarView(viewModel: self.searchbarViewModel, onSearch: { term, location, categories in
+                        self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
                     })
                     .padding(EdgeInsets.init(top: 200, leading: 10, bottom: 0, trailing: 10))
                     .zIndex(2)
@@ -44,18 +39,19 @@ struct BusinessesHomeView: View {
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
+        .onReceive(self.viewModel.$businesses, perform: { result in
+            if let errorMessage = result.error?.localizedDescription {
+                self.isAlertShown = true
+                self.alertMessage = errorMessage
+            }
+        })
+        .alert(isPresented: self.$isAlertShown) { () -> Alert in
+            Alert(title: Text("We encountered a problem"), message: Text(self.alertMessage), dismissButton: .default(Text("OK")))
+        }
         .onAppear {
             self.viewModel.startLocationService()
-            self.events.searchBusinessesCancellable = self.viewModel.$businesses.sink { result in
-                if let errorMessage = result.error?.localizedDescription {
-                    self.isAlertShown = true
-                    self.events.alertMessage = errorMessage
-                }
-            }
         }
-        .alert(isPresented: self.$isAlertShown) { () -> Alert in
-            Alert(title: Text("We encountered a problem"), message: Text(self.events.alertMessage), dismissButton: .default(Text("OK")))
-        }
+        
     }
     func buildDealsView() -> AnyView {
         if let deals = self.viewModel.deals.value {

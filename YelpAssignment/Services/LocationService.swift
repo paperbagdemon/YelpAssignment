@@ -10,6 +10,7 @@ import Foundation
 import CoreLocation
 import Mapbox
 import MapboxDirections
+import MapboxGeocoder
 import Combine
 
 struct LocationError: LocalizedError {
@@ -29,6 +30,8 @@ struct LocationError: LocalizedError {
 class LocationService: NSObject, CLLocationManagerDelegate {
     static let defaultService = LocationService()
     let locationManager = CLLocationManager()
+    let geoCoder = Geocoder.shared
+    let directions = Directions.shared
     
     @Published var coordinates: Coordinates?
     func startService() {
@@ -48,11 +51,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         coordinates = Coordinates(latitude: location.latitude, longitude: location.longitude)
     }
     
+    //future value is [Route]?, issue with running the the data type on tests
     func getDirections(fromCoordinates: Coordinates?, toCoordinates: Coordinates?) -> Future<[Route]?, Error> {
         let future = Future<[Route]?, Error> { promise in
             if let from = fromCoordinates,let to = toCoordinates, let fromLat = from.latitude, let fromLong = from.longitude, let toLat = to.latitude, let toLong = to.longitude {
                 
-                let directions = Directions.shared
                 let waypoints = [
                     Waypoint(coordinate: CLLocationCoordinate2D(latitude: fromLat, longitude: fromLong), name: "start"),
                     Waypoint(coordinate: CLLocationCoordinate2D(latitude: toLat, longitude: toLong), name: "destination"),
@@ -61,7 +64,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                 let options = RouteOptions(waypoints: waypoints, profileIdentifier: .automobileAvoidingTraffic)
                 options.includesSteps = true
 
-                _ = directions.calculate(options) { (session, result) in
+                self.directions.calculate(options) { (session, result) in
                     switch result {
                     case .failure(let error):
                         promise(.failure(error))
@@ -74,6 +77,23 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             }
         }
         
+        return future
+    }
+    
+    //future value is [GeocodedPlacemark]?, issue with running the the data type on tests
+    func getLocations(term: String) -> Future<[GeocodedPlacemark]?, Error> {
+        let future = Future<[GeocodedPlacemark]?, Error> { promise in
+            let options = ForwardGeocodeOptions(query: term)
+            options.allowedScopes = [.address, .pointOfInterest]
+            options.maximumResultCount = 7
+            _ = self.geoCoder.geocode(options) { (placemarks, attribution, error) in
+                if error != nil {
+                    promise(.failure(LocationError(error?.localizedDescription ?? "Unable to find locations")))
+                } else {
+                    promise(.success(placemarks))
+                }
+            }
+        }
         return future
     }
 }

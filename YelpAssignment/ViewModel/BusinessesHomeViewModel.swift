@@ -26,7 +26,7 @@ enum BusinessSortType: String, CaseIterable, Identifiable {
 final class BusinessesHomeViewModel: ObservableObject {
     private var apiClient: APIClient!
     private var locationService = LocationService.defaultService
-    var locationCancellable: AnyCancellable?
+    private var bag = Set<AnyCancellable>()
     @Published private(set) var businesses: (value: [Business]?, error: Error?)
     @Published private(set) var deals: (value: [Business]?, error: Error?)
     var sortType = BusinessSortType.distance {
@@ -103,14 +103,14 @@ final class BusinessesHomeViewModel: ObservableObject {
     // MARK: Location Services
     func startLocationService() {
         locationService.startService()
-        locationCancellable = locationService.$coordinates.sink { coordinates in
+        locationService.$coordinates.sink { coordinates in
             if let coordinatesValue = coordinates {
                 self.fetchNearbyDeals(coordinatesValue)
             }
         }
+        .store(in: &bag)
     }
     func stopLocationService() {
         locationService.stopService()
-        locationCancellable?.cancel()
     }
 }

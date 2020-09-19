@@ -36,9 +36,10 @@
 		9F2B7DFF2510A6A700482AF7 /* YelpAssignmentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7DFE2510A6A700482AF7 /* YelpAssignmentUITests.swift */; };
 		9F2B7E0F2510AF3800482AF7 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */; };
 		9F2B7E152510B51B00482AF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E142510B51B00482AF7 /* HeaderView.swift */; };
-		9F2B7E1B2510B81500482AF7 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E1A2510B81500482AF7 /* SearchBarView.swift */; };
+		9F2B7E1B2510B81500482AF7 /* BusinessSearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E1A2510B81500482AF7 /* BusinessSearchBarView.swift */; };
 		9F2B7E1E2510BF2000482AF7 /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E1D2510BF2000482AF7 /* MockAPIClient.swift */; };
 		9F5C2712251128A600B97CC1 /* LiveAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5C2711251128A600B97CC1 /* LiveAPIServiceTests.swift */; };
+		9F6CDCB3251610C6003B3D5C /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6CDCB2251610C6003B3D5C /* MapboxGeocoder.framework */; };
 		9F71E085251117B200E54517 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F71E084251117B200E54517 /* Category.swift */; };
 		9F71E0872511181A00E54517 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F71E0862511181A00E54517 /* Coordinates.swift */; };
 		9F71E0892511187300E54517 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F71E0882511187300E54517 /* Location.swift */; };
@@ -63,6 +64,7 @@
 		9FC10A1225124198001A1CF2 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC10A1125124198001A1CF2 /* CategoriesView.swift */; };
 		9FC10A14251246A8001A1CF2 /* BusinessDetailAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC10A13251246A8001A1CF2 /* BusinessDetailAPIService.swift */; };
 		9FE31DDA2510FBF2001FB173 /* SearchBusinessAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE31DD92510FBF2001FB173 /* SearchBusinessAPIService.swift */; };
+		9FE64357251643020038DF6F /* BusinessSearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE64356251643020038DF6F /* BusinessSearchBarViewModel.swift */; };
 		9FF681B52514737A007FBF7A /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF681B42514737A007FBF7A /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
@@ -119,11 +121,12 @@
 		9F2B7E002510A6A700482AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		9F2B7E142510B51B00482AF7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		9F2B7E1A2510B81500482AF7 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		9F2B7E1A2510B81500482AF7 /* BusinessSearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSearchBarView.swift; sourceTree = "<group>"; };
 		9F2B7E1D2510BF2000482AF7 /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
 		9F2B7E232510D44000482AF7 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		9F2B7E242510D44000482AF7 /* CDYelpFusionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CDYelpFusionKit.framework; path = Carthage/Build/iOS/CDYelpFusionKit.framework; sourceTree = "<group>"; };
 		9F5C2711251128A600B97CC1 /* LiveAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAPIServiceTests.swift; sourceTree = "<group>"; };
+		9F6CDCB2251610C6003B3D5C /* MapboxGeocoder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxGeocoder.framework; path = Carthage/Build/iOS/MapboxGeocoder.framework; sourceTree = "<group>"; };
 		9F71E084251117B200E54517 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		9F71E0862511181A00E54517 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		9F71E0882511187300E54517 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 		9FC10A1125124198001A1CF2 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		9FC10A13251246A8001A1CF2 /* BusinessDetailAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailAPIService.swift; sourceTree = "<group>"; };
 		9FE31DD92510FBF2001FB173 /* SearchBusinessAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusinessAPIService.swift; sourceTree = "<group>"; };
+		9FE64356251643020038DF6F /* BusinessSearchBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSearchBarViewModel.swift; sourceTree = "<group>"; };
 		9FF681B42514737A007FBF7A /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F6CDCB3251610C6003B3D5C /* MapboxGeocoder.framework in Frameworks */,
 				9F2B7E0F2510AF3800482AF7 /* Alamofire.framework in Frameworks */,
 				9FC10A0725120DC9001A1CF2 /* SDWebImageSwiftUI.framework in Frameworks */,
 				9FC10A0825120DC9001A1CF2 /* SDWebImageMapKit.framework in Frameworks */,
@@ -256,6 +261,7 @@
 		9F2B7E0D2510AF3800482AF7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9F6CDCB2251610C6003B3D5C /* MapboxGeocoder.framework */,
 				9F05427B2515F138009420EB /* MapboxDirections.framework */,
 				9F05427C2515F138009420EB /* Polyline.framework */,
 				9F05427D2515F138009420EB /* Turf.framework */,
@@ -281,7 +287,7 @@
 				9F0542772515D9BF009420EB /* DirectionsView.swift */,
 				9F02FC3F251382A7005588DD /* ReviewsView.swift */,
 				9F2B7E142510B51B00482AF7 /* HeaderView.swift */,
-				9F2B7E1A2510B81500482AF7 /* SearchBarView.swift */,
+				9F2B7E1A2510B81500482AF7 /* BusinessSearchBarView.swift */,
 				9FC10A0A2512258F001A1CF2 /* MapView.swift */,
 				9F0542732515CE30009420EB /* MapboxView.swift */,
 				9FC10A0C2512306D001A1CF2 /* StarRatingView.swift */,
@@ -324,6 +330,7 @@
 				9FB990222510D96C00C23941 /* BusinessesHomeViewModel.swift */,
 				9FAC1FA9251248AB003EE8EF /* BusinessDetailViewModel.swift */,
 				9F0542792515E5CF009420EB /* DirectionsViewModel.swift */,
+				9FE64356251643020038DF6F /* BusinessSearchBarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -520,6 +527,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/MapboxDirections.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Polyline.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Turf.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/MapboxGeocoder.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -538,6 +546,7 @@
 			files = (
 				9FAC1FAF2512573C003EE8EF /* Open.swift in Sources */,
 				9F02FC3825137B60005588DD /* PhoneNumbersView.swift in Sources */,
+				9FE64357251643020038DF6F /* BusinessSearchBarViewModel.swift in Sources */,
 				9F71E085251117B200E54517 /* Category.swift in Sources */,
 				9F8B3C5C2514933F00227C77 /* DealsBannerView.swift in Sources */,
 				9F2B7E152510B51B00482AF7 /* HeaderView.swift in Sources */,
@@ -557,7 +566,7 @@
 				9F2B7DDF2510A6A600482AF7 /* YelpAssignment.xcdatamodeld in Sources */,
 				9F02FC4225139C89005588DD /* BusinessListRowView.swift in Sources */,
 				9FE31DDA2510FBF2001FB173 /* SearchBusinessAPIService.swift in Sources */,
-				9F2B7E1B2510B81500482AF7 /* SearchBarView.swift in Sources */,
+				9F2B7E1B2510B81500482AF7 /* BusinessSearchBarView.swift in Sources */,
 				9FB990262510D9FD00C23941 /* Business.swift in Sources */,
 				9F0542742515CE30009420EB /* MapboxView.swift in Sources */,
 				9FC10A14251246A8001A1CF2 /* BusinessDetailAPIService.swift in Sources */,
@@ -750,7 +759,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = YelpAssignment/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -775,7 +784,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = YelpAssignment/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
