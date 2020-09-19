@@ -100,4 +100,18 @@ class LiveAPIServiceTests: XCTestCase {
         XCTAssertNil(viewModel.deals.error, viewModel.deals.error?.localizedDescription ?? "")
         XCTAssertNotNil(viewModel.deals.value, "BusinessListViewModel list is nil")
     }
+
+//  TODO: bug in Directions library, could not run tests
+//    func testGetDirections() {
+//        let expect = expectation(description: "getDirections")
+//        let viewModel = DirectionsViewModel.init(fromCoordinates: Coordinates(latitude: 14.675525, longitude: 121.0437512), toCoordinates: Coordinates(latitude: 14.6032416, longitude: 121.0045141))
+//        
+//        let cancellable = viewModel.$routes.sink { _ in
+//            expect.fulfill()
+//        }
+//    
+//        waitForExpectations(timeout: 10.0, handler: nil)
+//        XCTAssertNil(viewModel.routes.error, viewModel.routes.error?.localizedDescription ?? "")
+//        XCTAssertNotNil(viewModel.routes.value, "directions is nil")
+//    }
 }

@@ -10,12 +10,14 @@ import Foundation
 
 final class BusinessDetailViewModel: ObservableObject {
     private var apiClient: APIClient!
+    private(set) var locationService: LocationService!
+    private(set) var businessID: String
     @Published private(set) var business: (value: Business?,error: Error?)
     @Published private(set) var reviews: (value: [Review]?,error: Error?)
-    private(set) var businessID: String
-    init(apiClient: APIClient, businessID: String) {
+    init(apiClient: APIClient, locationService: LocationService, businessID: String) {
         self.businessID = businessID
         self.apiClient = apiClient
+        self.locationService = locationService
     }
     func fetchBusinessDetail(completion: ((Business?, Error?) -> Void)? = nil) {
         let service = BusinessDetailAPIService.init(client: self.apiClient, businessId: self.businessID)
@@ -31,8 +33,8 @@ final class BusinessDetailViewModel: ObservableObject {
             completion?(data?.reviews, error)
         })
     }
-    convenience init(apiClient: APIClient, businessID: String, business: Business? = nil, reviews: [Review]? = nil) {
-        self.init(apiClient: apiClient, businessID: businessID)
+    convenience init(apiClient: APIClient,locationService: LocationService = LocationService.defaultService, businessID: String, business: Business? = nil, reviews: [Review]? = nil) {
+        self.init(apiClient: apiClient,locationService: locationService , businessID: businessID)
         self.business.value = business
         self.reviews.value = reviews
     }

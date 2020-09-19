@@ -1,0 +1,10 @@
+{
+  "commitish" : "v0.10.4",
+  "iOS" : [
+    {
+      "name" : "MapboxMobileEvents",
+      "hash" : "d01522290ef64cca1abc1bcdd04d2162d179639bca3cabb89767af9af976ee66",
+      "linking" : "dynamic"
+    }
+  ]
+}

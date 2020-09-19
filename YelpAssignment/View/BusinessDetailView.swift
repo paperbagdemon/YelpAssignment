@@ -12,6 +12,7 @@ import SDWebImageSwiftUI
 struct BusinessDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var viewModel: BusinessDetailViewModel
+    @State var isShowingDirections = false
     var body: some View {
         buildBodyView()
             .onAppear {
@@ -20,6 +21,16 @@ struct BusinessDetailView: View {
         }
         .navigationBarTitle("")
         .navigationBarHidden(true)
+        .sheet(isPresented: self.$isShowingDirections) {
+            self.buildBusinessDetailView()
+        }
+    }
+    func buildBusinessDetailView() -> AnyView {
+        return AnyView (
+            DirectionsView(viewModel: DirectionsViewModel(
+                fromCoordinates: viewModel.locationService.coordinates,
+                toCoordinates: self.viewModel.business.value?.coordinates))
+        )
     }
     func buildBodyView() -> AnyView {
         if let business = viewModel.business.value {
@@ -78,9 +89,12 @@ struct BusinessDetailView: View {
                             Spacer()
                         }
                         PhotosRollView(photos: business.photos, size: 120)
-                        MapView(coordinate: business.coordinates ?? Coordinates.init(latitude: 0, longitude: 0))
-                        .frame(height: 160)
-                        .disabled(true)
+                        Button(action: {
+                            self.isShowingDirections.toggle()
+                        }, label: {
+                            MapView(coordinate: business.coordinates ?? Coordinates.init(latitude: 0, longitude: 0))
+                            .frame(height: 160)
+                        })
                         HStack {
                             VStack {
                                 Text(business.displayAddress())

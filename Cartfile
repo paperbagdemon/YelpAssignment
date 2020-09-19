@@ -2,3 +2,7 @@ github "Alamofire/Alamofire" ~> 5.2
 github "SDWebImage/SDWebImage"
 github "SDWebImage/SDWebImageSwiftUI"
 github "fermoya/SwiftUIPager"
+binary "https://api.mapbox.com/downloads/v2/carthage/mobile-maps/mapbox-ios-sdk-dynamic.json" ~> 6.2.0
+github "mapbox/mapbox-events-ios" ~> 0.10.4
+github "mapbox/mapbox-directions-swift" ~> 0.33
+github "mapbox/MapboxGeocoder.swift" ~> 0.12

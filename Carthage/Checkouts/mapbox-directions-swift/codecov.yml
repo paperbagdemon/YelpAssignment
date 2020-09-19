@@ -1,0 +1,9 @@
+ignore:
+  - "Directions Example"
+  - "Tests"
+
+coverage:
+  status:
+    project:
+      default:
+        threshold: 1%

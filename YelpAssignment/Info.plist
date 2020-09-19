@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoiZW5zY2lvbmUiLCJhIjoiY2tmOTY3Y3NjMDR1cDJ3cWVxZG9oOXlicyJ9.dDFhl2_1VaNJFFMPo4g9Ag</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Allow app to get your locations</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

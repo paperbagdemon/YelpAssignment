@@ -31,8 +31,8 @@ class YelpAssignmentTests: XCTestCase {
         }
     }
     
-    func testSuggesCAtegories(){
-        let categories = Category.suggestCategory(term: "local")
+    func testSuggesCategories(){
+        let categories = Category.suggestCategory(term: "l")
         XCTAssert(categories.count > 0)
     }
 

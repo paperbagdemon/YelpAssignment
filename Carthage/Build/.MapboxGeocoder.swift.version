@@ -1,0 +1,11 @@
+{
+  "commitish" : "v0.12.0",
+  "iOS" : [
+    {
+      "hash" : "e28ca787120ac276ada25adee08bb569c7d78193dbc4397ffa147ebea421720a",
+      "name" : "MapboxGeocoder",
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+    }
+  ]
+}
