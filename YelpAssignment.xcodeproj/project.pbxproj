@@ -65,6 +65,7 @@
 		9FC10A14251246A8001A1CF2 /* BusinessDetailAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC10A13251246A8001A1CF2 /* BusinessDetailAPIService.swift */; };
 		9FE31DDA2510FBF2001FB173 /* SearchBusinessAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE31DD92510FBF2001FB173 /* SearchBusinessAPIService.swift */; };
 		9FE64357251643020038DF6F /* BusinessSearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE64356251643020038DF6F /* BusinessSearchBarViewModel.swift */; };
+		9FE64359251694F30038DF6F /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE64358251694F30038DF6F /* NavigationLazyView.swift */; };
 		9FF681B52514737A007FBF7A /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF681B42514737A007FBF7A /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +153,7 @@
 		9FC10A13251246A8001A1CF2 /* BusinessDetailAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailAPIService.swift; sourceTree = "<group>"; };
 		9FE31DD92510FBF2001FB173 /* SearchBusinessAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusinessAPIService.swift; sourceTree = "<group>"; };
 		9FE64356251643020038DF6F /* BusinessSearchBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSearchBarViewModel.swift; sourceTree = "<group>"; };
+		9FE64358251694F30038DF6F /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
 		9FF681B42514737A007FBF7A /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -297,6 +299,7 @@
 				9FAC1FB225125A3A003EE8EF /* HoursView.swift */,
 				9F02FC3725137B60005588DD /* PhoneNumbersView.swift */,
 				9F8B3C5B2514933F00227C77 /* DealsBannerView.swift */,
+				9FE64358251694F30038DF6F /* NavigationLazyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				9F02FC40251382A7005588DD /* ReviewsView.swift in Sources */,
 				9FB990322510EEEF00C23941 /* APIService.swift in Sources */,
 				9FAC1FAA251248AB003EE8EF /* BusinessDetailViewModel.swift in Sources */,
+				9FE64359251694F30038DF6F /* NavigationLazyView.swift in Sources */,
 				9FB9903E2510F50700C23941 /* APIClient.swift in Sources */,
 				9FF681B52514737A007FBF7A /* LocationService.swift in Sources */,
 				9F2B7DDC2510A6A600482AF7 /* SceneDelegate.swift in Sources */,

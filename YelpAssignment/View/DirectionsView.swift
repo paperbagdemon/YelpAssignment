@@ -41,6 +41,11 @@ struct DirectionsView: View {
         }
     }
 
+    init(viewModel: DirectionsViewModel){
+        print("directions")
+        self.viewModel = viewModel
+    }
+
     func buildAutoSuggestList() -> AnyView {
         let locationList: [GeocodedPlacemarkWrapper]? = self.viewModel.locations.value?.map({ value -> GeocodedPlacemarkWrapper in
             return GeocodedPlacemarkWrapper.init(placemark: value)

@@ -25,6 +25,7 @@ struct MapboxView: UIViewRepresentable {
         if var routeCoordinates = route?.shape?.coordinates, routeCoordinates.count > 0 {
             // Convert the route’s coordinates into a polyline.
             let routeLine = MGLPolyline(coordinates: &routeCoordinates, count: UInt(routeCoordinates.count))
+            view.removeAnnotations(view.annotations ?? [])
             view.addAnnotation(routeLine)
             let centerCoordinates = routeCoordinates[Int(routeCoordinates.count/2)]
             view.setCenter(centerCoordinates, zoomLevel: 13, animated: true)

@@ -13,23 +13,31 @@ struct BusinessDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var viewModel: BusinessDetailViewModel
     @State var isShowingDirections = false
+    var directionsViewModel: DirectionsViewModel
     var body: some View {
         buildBodyView()
             .onAppear {
                 self.viewModel.fetchBusinessDetail()
                 self.viewModel.fetchBusinessReviews()
         }
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
         .sheet(isPresented: self.$isShowingDirections) {
             self.buildBusinessDetailView()
         }
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
     }
+
+    init(viewModel: BusinessDetailViewModel) {
+        print("details")
+        self.viewModel = viewModel
+        self.directionsViewModel = DirectionsViewModel(
+        fromCoordinates: viewModel.locationService.coordinates,
+        toCoordinates: viewModel.business.value?.coordinates)
+    }
+
     func buildBusinessDetailView() -> AnyView {
         return AnyView (
-            DirectionsView(viewModel: DirectionsViewModel(
-                fromCoordinates: viewModel.locationService.coordinates != nil ? viewModel.locationService.coordinates :  self.viewModel.business.value?.coordinates,
-                toCoordinates: self.viewModel.business.value?.coordinates))
+            DirectionsView(viewModel: self.directionsViewModel)
         )
     }
     func buildBodyView() -> AnyView {

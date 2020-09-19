@@ -128,9 +128,9 @@ struct BusinessesHomeView: View {
                 .zIndex(2)
                 .frame(height: 20)
                 List(businesses) { business in
-                    NavigationLink(destination: BusinessDetailView(
-                        viewModel: BusinessDetailViewModel(apiClient: APIClient.defaultClient,
-                        businessID: business.id, business: business))) {
+                    NavigationLink(destination: NavigationLazyView(BusinessDetailView(
+                    viewModel: BusinessDetailViewModel(apiClient: APIClient.defaultClient,
+                    businessID: business.id, business: business)))) {
                         BusinessListRowView(business: business)
                     }
                 }
