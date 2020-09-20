@@ -37,7 +37,6 @@
 		9F2B7E0F2510AF3800482AF7 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */; };
 		9F2B7E152510B51B00482AF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E142510B51B00482AF7 /* HeaderView.swift */; };
 		9F2B7E1B2510B81500482AF7 /* BusinessSearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E1A2510B81500482AF7 /* BusinessSearchBarView.swift */; };
-		9F2B7E1E2510BF2000482AF7 /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B7E1D2510BF2000482AF7 /* MockAPIClient.swift */; };
 		9F5C2712251128A600B97CC1 /* LiveAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5C2711251128A600B97CC1 /* LiveAPIServiceTests.swift */; };
 		9F6CDCB3251610C6003B3D5C /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6CDCB2251610C6003B3D5C /* MapboxGeocoder.framework */; };
 		9F71E085251117B200E54517 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F71E084251117B200E54517 /* Category.swift */; };
@@ -124,7 +123,6 @@
 		9F2B7E0E2510AF3800482AF7 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		9F2B7E142510B51B00482AF7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		9F2B7E1A2510B81500482AF7 /* BusinessSearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSearchBarView.swift; sourceTree = "<group>"; };
-		9F2B7E1D2510BF2000482AF7 /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
 		9F2B7E232510D44000482AF7 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		9F2B7E242510D44000482AF7 /* CDYelpFusionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CDYelpFusionKit.framework; path = Carthage/Build/iOS/CDYelpFusionKit.framework; sourceTree = "<group>"; };
 		9F5C2711251128A600B97CC1 /* LiveAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAPIServiceTests.swift; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				9FB9903D2510F50700C23941 /* APIClient.swift */,
-				9F2B7E1D2510BF2000482AF7 /* MockAPIClient.swift */,
 				9FB990312510EEEF00C23941 /* APIService.swift */,
 				9FE31DD92510FBF2001FB173 /* SearchBusinessAPIService.swift */,
 				9FC10A13251246A8001A1CF2 /* BusinessDetailAPIService.swift */,
@@ -566,7 +563,6 @@
 				9F71E085251117B200E54517 /* Category.swift in Sources */,
 				9F8B3C5C2514933F00227C77 /* DealsBannerView.swift in Sources */,
 				9F2B7E152510B51B00482AF7 /* HeaderView.swift in Sources */,
-				9F2B7E1E2510BF2000482AF7 /* MockAPIClient.swift in Sources */,
 				9FB9902B2510EAF900C23941 /* Setting.swift in Sources */,
 				9F02FC482513AE44005588DD /* Stub.swift in Sources */,
 				9F02FC3A2513810F005588DD /* ReviewAPIService.swift in Sources */,

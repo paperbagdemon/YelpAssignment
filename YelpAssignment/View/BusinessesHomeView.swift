@@ -45,6 +45,7 @@ struct BusinessesHomeView: View {
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .onReceive(self.viewModel.$businesses, perform: { result in
             if let errorMessage = result.error?.localizedDescription {
                 self.isAlertShown = true
