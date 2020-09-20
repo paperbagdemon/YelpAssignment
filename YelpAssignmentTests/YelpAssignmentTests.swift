@@ -10,11 +10,9 @@ import XCTest
 @testable import Yass
 
 class YelpAssignmentTests: XCTestCase {
-    
-    //TODO: why is this failing
-    func testSuggesCategories(){
+
+    func testSuggesCategories() {
         let categories = Setting.defaultSettings.suggestCategory(term: "loc")
         XCTAssert(categories.count > 0)
     }
-
 }

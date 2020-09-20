@@ -41,7 +41,6 @@ final class DirectionsViewModel: ObservableObject {
             switch completion {
             case .failure(let error):
                 self.locations = (nil, error)
-                self.objectWillChange.send()
             case .finished: ()
             }
 
@@ -59,4 +58,3 @@ final class DirectionsViewModel: ObservableObject {
         self.toCoordinates = toCoordinates
     }
 }
-

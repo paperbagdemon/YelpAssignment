@@ -11,7 +11,7 @@ import Foundation
 struct Stub {
     static let testPhotoURL = "https://vignette.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg/revision/latest?cb=20190328215620"
     static let testBusinessID = "sFKF4eyP6DKdr2o1qpykig"
-    static func sampleBusiness(id: String = UUID().uuidString,name: String = "Lola Basyang's") -> Business {
+    static func sampleBusiness(id: String = UUID().uuidString, name: String = "Lola Basyang's") -> Business {
         return Business(id: id, name: name, imageUrl: "https://s3-media1.fl.yelpcdn.com/bphoto/zVCoHsMZebOXgM9uZDIWKw/o.jpg",
         isClosed: nil, url: nil, price: "₱₱", phone: "+639228177570",
         displayPhone: "+639228177570", photos: nil, rating: 4.5,

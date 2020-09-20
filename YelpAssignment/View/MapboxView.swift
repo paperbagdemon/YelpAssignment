@@ -28,11 +28,11 @@ struct MapboxView: UIViewRepresentable {
         if var routeCoordinates = route?.shape?.coordinates, routeCoordinates.count > 0 {
             // Convert the route’s coordinates into a polyline.
             let routeLine = MGLPolyline(coordinates: &routeCoordinates, count: UInt(routeCoordinates.count))
-            
+
             let fromPoint = MGLPointAnnotation()
             fromPoint.coordinate = CLLocationCoordinate2DMake(fromCoordinates?.latitude ?? 0, fromCoordinates?.longitude ?? 0)
             fromPoint.title = destinationName
-            
+
             let toPoint = MGLPointAnnotation()
             toPoint.coordinate = CLLocationCoordinate2DMake(toCoordinates?.latitude ?? 0, toCoordinates?.longitude ?? 0)
             toPoint.title = fromName
@@ -63,4 +63,3 @@ struct MapboxView_Previews: PreviewProvider {
         MapboxView(fromCoordinates: Coordinates.init(latitude: 14.675525, longitude: 121.0437512))
     }
 }
-

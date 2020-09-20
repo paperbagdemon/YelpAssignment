@@ -35,7 +35,7 @@ struct BusinessesHomeView: View {
                 }
                 VStack {
                     BusinessSearchBarView(viewModel: self.searchbarViewModel, onSearch: { term, location, categories in
-                        let _ = self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
+                        _ = self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
                     })
                     .padding(EdgeInsets.init(top: 200, leading: 10, bottom: 0, trailing: 10))
                     .zIndex(2)
@@ -57,17 +57,12 @@ struct BusinessesHomeView: View {
         .onAppear {
             self.viewModel.startLocationService()
         }
-        
     }
     func buildDealsView() -> AnyView {
         if let deals = self.viewModel.deals.value {
-            return AnyView (
-                DealsBannerView(deals: deals)
-            )
+            return AnyView(DealsBannerView(deals: deals))
         } else {
-            return AnyView (
-                HeaderView()
-            )
+            return AnyView(HeaderView())
         }
     }
     func buildSortSelection() -> AnyView {
@@ -97,7 +92,7 @@ struct BusinessesHomeView: View {
         return AnyView(
             VStack {
                 ZStack {
-                    HStack (spacing:2) {
+                    HStack(spacing:2) {
                         Spacer()
                         Button(action: {
                             self.viewModel.isSortedAscending.toggle()
@@ -108,9 +103,7 @@ struct BusinessesHomeView: View {
                         })
                         .background(Color.white)
                         .zIndex(3)
-                        
                         Button(action: {
-                            
                         }, label: {
                             HStack {
                                 Button(action: {

@@ -113,7 +113,7 @@ struct DealsBannerView: View {
                     .scaledToFill()
                     .frame(width: geo.size.width)
                     VStack {
-                        HStack{
+                        HStack {
                             Text(business.name)
                             .font(.system(size: 18))
                             .bold()

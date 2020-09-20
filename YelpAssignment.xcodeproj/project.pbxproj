@@ -522,7 +522,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  git diff --cached --name-only | grep \"\\.swift\" | while read filename; do\n      echo \"swiftlinting file $filename\";\n      swiftlint lint --path \"$(git rev-parse --show-toplevel)/${filename}\";\n  done\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		9F2B7E102510AF5800482AF7 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

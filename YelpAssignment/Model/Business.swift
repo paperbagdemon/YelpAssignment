@@ -45,7 +45,7 @@ struct Business: Identifiable, Decodable, Equatable, Hashable {
         case transactions
         case hours
     }
-    static func ==(lhs: Business, rhs: Business) -> Bool {
+    static func == (lhs: Business, rhs: Business) -> Bool {
         return lhs.id == rhs.id && lhs.name == rhs.name
     }
     func hash(into hasher: inout Hasher) {
@@ -57,17 +57,17 @@ extension Business {
     func displayAddress() -> String {
         return displayAddress(delimiter: "\n")
     }
+
     func displayAddress(delimiter: String) -> String {
         guard let addresses = self.location?.displayAddress else {
             return self.location?.addressOne ?? ""
         }
         var displayAddress = ""
-        for address in addresses {
-            if !address.isEmpty {
-                displayAddress += address
-                if address != addresses.last {
-                    displayAddress += delimiter
-                }
+
+        for address in addresses where !address.isEmpty {
+            displayAddress += address
+            if address != addresses.last {
+                displayAddress += delimiter
             }
         }
         return displayAddress

@@ -32,7 +32,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     let geoCoder = Geocoder.shared
     let directions = Directions.shared
-    
+
     @Published var coordinates: Coordinates?
     func startService() {
         self.locationManager.requestAlwaysAuthorization()
@@ -50,21 +50,21 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         coordinates = Coordinates(latitude: location.latitude, longitude: location.longitude)
     }
-    
+
     //future value is [Route]?, issue with running the the data type on tests
     func getDirections(fromCoordinates: Coordinates?, toCoordinates: Coordinates?) -> Future<[Route]?, Error> {
         let future = Future<[Route]?, Error> { promise in
-            if let from = fromCoordinates,let to = toCoordinates, let fromLat = from.latitude, let fromLong = from.longitude, let toLat = to.latitude, let toLong = to.longitude {
-                
+            if let from = fromCoordinates, let toCoor = toCoordinates, let fromLat = from.latitude, let fromLong = from.longitude, let toLat = toCoor.latitude, let toLong = toCoor.longitude {
+
                 let waypoints = [
                     Waypoint(coordinate: CLLocationCoordinate2D(latitude: fromLat, longitude: fromLong), name: "start"),
-                    Waypoint(coordinate: CLLocationCoordinate2D(latitude: toLat, longitude: toLong), name: "destination"),
+                    Waypoint(coordinate: CLLocationCoordinate2D(latitude: toLat, longitude: toLong), name: "destination")
                 ]
 
                 let options = RouteOptions(waypoints: waypoints, profileIdentifier: .automobileAvoidingTraffic)
                 options.includesSteps = true
 
-                self.directions.calculate(options) { (session, result) in
+                self.directions.calculate(options) { (_, result) in
                     switch result {
                     case .failure(let error):
                         promise(.failure(error))
@@ -76,17 +76,16 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                 promise(.failure(LocationError("invalid locations")))
             }
         }
-        
         return future
     }
-    
+
     //future value is [GeocodedPlacemark]?, issue with running the the data type on tests
     func getLocations(term: String) -> Future<[GeocodedPlacemark]?, Error> {
         let future = Future<[GeocodedPlacemark]?, Error> { promise in
             let options = ForwardGeocodeOptions(query: term)
             options.allowedScopes = [.address, .pointOfInterest]
             options.maximumResultCount = 7
-            _ = self.geoCoder.geocode(options) { (placemarks, attribution, error) in
+            _ = self.geoCoder.geocode(options) { (placemarks, _, error) in
                 if error != nil {
                     promise(.failure(LocationError(error?.localizedDescription ?? "Unable to find locations")))
                 } else {

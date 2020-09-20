@@ -28,11 +28,11 @@ class LiveAPIServiceTests: XCTestCase {
             case .finished: ()
             }
             expect.fulfill()
-        }) { value in
+        }, receiveValue: { value in
             serviceResult = value
-        }
+        })
         .store(in: &bag)
-    
+
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(serviceError, serviceError?.localizedDescription ?? "")
         XCTAssertNotNil(serviceResult, "SearchBusinessAPIService call failed")
@@ -52,9 +52,9 @@ class LiveAPIServiceTests: XCTestCase {
             case .finished: ()
             }
             expect.fulfill()
-        }) { value in
+        }, receiveValue: { value in
             serviceResult = value
-        }
+        })
         .store(in: &bag)
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -76,89 +76,73 @@ class LiveAPIServiceTests: XCTestCase {
             case .finished: ()
             }
             expect.fulfill()
-        }) { value in
+        }, receiveValue: { value in
             serviceResult = value
-        }
+        })
         .store(in: &bag)
-        
+
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(serviceError, serviceError?.localizedDescription ?? "")
         XCTAssertNotNil(serviceResult, "ReviewAPIService is nil")
     }
-    
+
     func testBusinessListViewModel() {
         let expect = expectation(description: "searchBusinesses")
         let viewModel = BusinessesHomeViewModel(apiClient: APIClient.defaultClient)
         viewModel.searchBusinesses(keyword: "food", location: "Makati Avenue", categories: nil)?
-        .sink(receiveCompletion: { completion in
-            switch completion {
-            case .failure(_): ()
-            case .finished: ()
-            }
+        .sink(receiveCompletion: { _ in
             expect.fulfill()
-        }) { _ in
-        }
+        }, receiveValue: { _ in
+        })
         .store(in: &bag)
 
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(viewModel.businesses.error, viewModel.businesses.error?.localizedDescription ?? "")
         XCTAssertNotNil(viewModel.businesses.value, "BusinessListViewModel list is nil")
     }
-    
+
     func testFetchBusinessDetail() {
         let expect = expectation(description: "fetchBusinessDetail")
         let viewModel = BusinessDetailViewModel(apiClient: APIClient.defaultClient, businessID: Stub.testBusinessID, business: nil, reviews: nil)
 
         viewModel.fetchBusinessDetail()
-        .sink(receiveCompletion: { completion in
-            switch completion {
-            case .failure(_): ()
-            case .finished: ()
-            }
+        .sink(receiveCompletion: { _ in
             expect.fulfill()
-        }) { _ in
-        }
+        }, receiveValue: { _ in
+        })
         .store(in: &bag)
 
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(viewModel.business.error, viewModel.business.error?.localizedDescription ?? "")
         XCTAssertNotNil(viewModel.business.value, "BusinessListViewModel list is nil")
     }
-    
+
     func testFetchBusinessReviews() {
         let expect = expectation(description: "fetchBusinessReviews")
         let viewModel = BusinessDetailViewModel(apiClient: APIClient.defaultClient, businessID: Stub.testBusinessID, business: nil, reviews: nil)
 
         viewModel.fetchBusinessReviews()
-        .sink(receiveCompletion: { completion in
-            switch completion {
-            case .failure(_): ()
-            case .finished: ()
-            }
+        .sink(receiveCompletion: { _ in
             expect.fulfill()
-        }) { _ in
-        }
+        }, receiveValue: { _ in
+        })
         .store(in: &bag)
 
         waitForExpectations(timeout: 10.0, handler: nil)
         XCTAssertNil(viewModel.reviews.error, viewModel.reviews.error?.localizedDescription ?? "")
         XCTAssertNotNil(viewModel.reviews.value, "BusinessListViewModel list is nil")
     }
-    
+
     func testFetchNearbyDeals() {
         let coordinates = Coordinates(latitude: 37.7873589, longitude: -122.408227)
         let expect = expectation(description: "fetchNearbyDeals")
         let viewModel = BusinessesHomeViewModel(apiClient: APIClient.defaultClient)
 
         viewModel.fetchNearbyDeals(coordinates)
-        .sink(receiveCompletion: { completion in
-            switch completion {
-            case .failure(_): ()
-            case .finished: ()
-            }
+        .sink(receiveCompletion: { _ in
             expect.fulfill()
-        }) { _ in
-        }
+        }, receiveValue: { _ in
+        })
         .store(in: &bag)
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -166,7 +150,7 @@ class LiveAPIServiceTests: XCTestCase {
         XCTAssertNotNil(viewModel.deals.value, "BusinessListViewModel list is nil")
     }
 
-//  TODO: this tests fails to compile when referencing some Mapbox objects
+// this tests fails to compile when referencing some Mapbox objects
 //    func testGeLocations() {
 //        let expect = expectation(description: "getLocations")
 //        let locationsManager = LocationService.defaultService

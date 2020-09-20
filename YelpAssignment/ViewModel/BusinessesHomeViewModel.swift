@@ -30,7 +30,7 @@ final class BusinessesHomeViewModel: ObservableObject {
     @Published private(set) var businesses: (value: [Business]?, error: Error?)
     @Published private(set) var deals: (value: [Business]?, error: Error?)
     @Published private(set) var businessesCancellable: AnyCancellable?
-    
+
     var sortType = BusinessSortType.distance {
         didSet {
            sortBusinesses()
@@ -41,22 +41,25 @@ final class BusinessesHomeViewModel: ObservableObject {
             sortBusinesses()
         }
     }
+
+    // MARK: Lifecycle
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
+    }
+
     convenience init(apiClient: APIClient, businesses: [Business]? = nil) {
         self.init(apiClient: apiClient)
         self.businesses.value = businesses
     }
-    //MARK: Lifecycle
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-    //MARK: Webservices
+
+    // MARK: Webservices
     func searchBusinesses(keyword: String? = nil, location: String? = nil, categories: [String]? = nil, attributes: [String]? = nil) -> Future<[Business]?, Error>? {
-        
+
         guard let keyword = keyword?.trimmingCharacters(in: .whitespacesAndNewlines), !keyword.isEmpty else {
             //do nothing
             return nil
         }
-        
+
         return Future<[Business]?, Error> { promise in
             let service = SearchBusinessAPIService.init(client: self.apiClient)
             if let locationValue = location?.trimmingCharacters(in: .whitespacesAndNewlines), !locationValue.isEmpty {
@@ -83,7 +86,7 @@ final class BusinessesHomeViewModel: ObservableObject {
                 case .finished: ()
                 }
                 self.businessesCancellable = nil
-            }) { value in
+            }, receiveValue: { value in
                 if let error = value?.error {
                     let retError = APIServiceError(error.description ?? "Unable to find what you are looking for")
                     self.businesses = (nil, retError)
@@ -92,12 +95,12 @@ final class BusinessesHomeViewModel: ObservableObject {
                     self.businesses = (value?.businesses, nil)
                     promise(.success(value?.businesses))
                 }
-            }
+            })
         }
     }
-    
-    //MARK: Deals services
-    func fetchNearbyDeals(_ coordinates: Coordinates) -> Future<[Business]?, Error>{
+
+    // MARK: Deals services
+    func fetchNearbyDeals(_ coordinates: Coordinates) -> Future<[Business]?, Error> {
         return Future<[Business]?, Error> { promise in
             let service = SearchBusinessAPIService.init(client: self.apiClient)
             service.latitude = coordinates.latitude
@@ -112,7 +115,7 @@ final class BusinessesHomeViewModel: ObservableObject {
                     promise(.failure(error))
                 case .finished: ()
                 }
-            }) { value in
+            }, receiveValue: { value in
                 if let error = value?.error {
                     let retError = APIServiceError(error.description ?? "Unable to find what you are looking for")
                     self.deals = (nil, retError)
@@ -121,7 +124,7 @@ final class BusinessesHomeViewModel: ObservableObject {
                     self.deals = (value?.businesses, nil)
                     promise(.success(value?.businesses))
                 }
-            }
+            })
             .store(in: &self.bag)
         }
     }
@@ -131,7 +134,7 @@ final class BusinessesHomeViewModel: ObservableObject {
         locationService.startService()
         locationService.$coordinates.sink { coordinates in
             if let coordinatesValue = coordinates {
-                let _ = self.fetchNearbyDeals(coordinatesValue)
+                _ = self.fetchNearbyDeals(coordinatesValue)
             }
         }
         .store(in: &bag)
@@ -139,8 +142,8 @@ final class BusinessesHomeViewModel: ObservableObject {
     func stopLocationService() {
         locationService.stopService()
     }
-    
-    //MARK: Other
+
+    // MARK: Other
     func sortBusinesses() {
         self.businesses.value = self.businesses.value?.sorted(by: { (businessA, businessB) -> Bool in
             var valueA: Double

@@ -16,7 +16,7 @@ struct ReviewsView: View {
     }
     func buildReviewRow(review: Review) -> AnyView {
         return AnyView(
-            VStack (spacing: 2) {
+            VStack(spacing: 2) {
                 Spacer()
                 HStack {
                     Text(review.user.name)
@@ -29,7 +29,7 @@ struct ReviewsView: View {
                 }
                 HStack(spacing: 20) {
                     VStack {
-                        GeometryReader { geo in
+                        GeometryReader { _ in
                             WebImage(url: URL(string: review.user.imageURL ?? ""))
                             .resizable()
                             .placeholder(Image(systemName: "person"))

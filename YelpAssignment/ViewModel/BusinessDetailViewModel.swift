@@ -14,8 +14,8 @@ final class BusinessDetailViewModel: ObservableObject {
     private var apiClient: APIClient!
     private(set) var locationService: LocationService!
     private(set) var businessID: String
-    @Published private(set) var business: (value: Business?,error: Error?)
-    @Published private(set) var reviews: (value: [Review]?,error: Error?)
+    @Published private(set) var business: (value: Business?, error: Error?)
+    @Published private(set) var reviews: (value: [Review]?, error: Error?)
 
     init(apiClient: APIClient, locationService: LocationService, businessID: String) {
         self.businessID = businessID
@@ -23,8 +23,8 @@ final class BusinessDetailViewModel: ObservableObject {
         self.locationService = locationService
     }
 
-    convenience init(apiClient: APIClient,locationService: LocationService = LocationService.defaultService, businessID: String, business: Business? = nil, reviews: [Review]? = nil) {
-        self.init(apiClient: apiClient,locationService: locationService , businessID: businessID)
+    convenience init(apiClient: APIClient, locationService: LocationService = LocationService.defaultService, businessID: String, business: Business? = nil, reviews: [Review]? = nil) {
+        self.init(apiClient: apiClient, locationService: locationService, businessID: businessID)
         self.business.value = business
         self.reviews.value = reviews
     }
@@ -40,10 +40,10 @@ final class BusinessDetailViewModel: ObservableObject {
                     promise(.failure(error))
                 case .finished: ()
                 }
-            }) { value in
+            }, receiveValue: { value in
                 self.business = (value, nil)
                 promise(.success(value))
-            }
+            })
             .store(in: &self.bag)
         }
     }
@@ -60,10 +60,10 @@ final class BusinessDetailViewModel: ObservableObject {
                     promise(.failure(error))
                 case .finished: ()
                 }
-            }) { value in
+            }, receiveValue: { value in
                 self.reviews = (value?.reviews, nil)
                 promise(.success(value?.reviews))
-            }
+            })
             .store(in: &self.bag)
         }
     }

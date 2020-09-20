@@ -58,7 +58,6 @@ class APIService<T: Decodable> {
                                 } else {
                                     do {
                                         try promise(.success(data.result.get()))
-                                        
                                     } catch {
                                         promise(.failure(error))
                                     }

@@ -24,4 +24,3 @@ struct Open: Decodable {
         start       <- map["start"]
     }
 }
-

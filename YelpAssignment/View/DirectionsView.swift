@@ -42,7 +42,7 @@ struct DirectionsView: View {
         .accessibility(identifier: "directionsView")
     }
 
-    init(viewModel: DirectionsViewModel){
+    init(viewModel: DirectionsViewModel) {
         print("directions")
         self.viewModel = viewModel
     }
@@ -60,7 +60,8 @@ struct DirectionsView: View {
                                 Button(action: {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     self.isLocationSelected = true
-                                    self.viewModel.fromCoordinates = Coordinates.init(latitude: value.placemark?.location?.coordinate.latitude, longitude: value.placemark?.location?.coordinate.longitude)
+                                    self.viewModel.fromCoordinates = Coordinates.init(latitude: value.placemark?.location?.coordinate.latitude,
+                                                                                      longitude: value.placemark?.location?.coordinate.longitude)
                                     self.viewModel.startLocationQuery = value.placemark?.qualifiedName ?? ""
                                     self.viewModel.getDirections()
                                 }, label: {
@@ -79,6 +80,29 @@ struct DirectionsView: View {
         } else {
             return AnyView(EmptyView())
         }
+    }
+
+    func buildSearchBar() -> AnyView {
+        return AnyView(
+            HStack {
+                Image(systemName: "scribble")
+                TextField("starting from current location", text: Binding.init(get: {
+                    self.viewModel.startLocationQuery
+                }, set: { value in
+                    self.viewModel.startLocationQuery = value
+                }), onEditingChanged: { _ in
+                    self.isLocationSelected = false
+                }, onCommit: {
+                    self.viewModel.locations = (nil, nil)
+                    self.viewModel.getDirections()
+                }).foregroundColor(.primary)
+                Button(action: {
+                    self.viewModel.startLocationQuery = ""
+                }, label: {
+                    Image(systemName: "xmark.circle.fill").opacity(self.viewModel.startLocationQuery == "" ? 0 : 1)
+                })
+            }
+        )
     }
 
     func buildBodyView() -> AnyView {
@@ -109,24 +133,7 @@ struct DirectionsView: View {
                         Spacer()
                     }
                     .padding()
-                    HStack {
-                        Image(systemName: "scribble")
-                        TextField("starting from current location", text: Binding.init(get: {
-                            self.viewModel.startLocationQuery
-                        }, set: { value in
-                            self.viewModel.startLocationQuery = value
-                        }), onEditingChanged: { _ in
-                            self.isLocationSelected = false
-                        }, onCommit: {
-                            self.viewModel.locations = (nil, nil)
-                            self.viewModel.getDirections()
-                        }).foregroundColor(.primary)
-                        Button(action: {
-                            self.viewModel.startLocationQuery = ""
-                        }, label: {
-                            Image(systemName: "xmark.circle.fill").opacity(self.viewModel.startLocationQuery == "" ? 0 : 1)
-                        })
-                    }
+                    buildSearchBar()
                     .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
                     .foregroundColor(.secondary)
                     .background(Color(.secondarySystemBackground))
