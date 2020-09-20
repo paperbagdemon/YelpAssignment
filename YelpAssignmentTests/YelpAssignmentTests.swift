@@ -12,9 +12,9 @@ import XCTest
 class YelpAssignmentTests: XCTestCase {
     
     //TODO: why is this failing
-//    func testSuggesCategories(){
-//        let categories = Setting.defaultSettings.suggestCategory(term: "accesso")
-//        XCTAssert(categories.count > 0)
-//    }
+    func testSuggesCategories(){
+        let categories = Setting.defaultSettings.suggestCategory(term: "loc")
+        XCTAssert(categories.count > 0)
+    }
 
 }
