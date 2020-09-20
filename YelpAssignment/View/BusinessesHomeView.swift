@@ -25,11 +25,16 @@ struct BusinessesHomeView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 220, maxHeight: 220)
                     buildContentView()
                     .padding(EdgeInsets.init(top: 30, leading: 0, bottom: 0, trailing: 0))
+                    .skeleton(with: self.viewModel.businessesCancellable != nil)
+                    .shape(type: .rectangle)
+                    .appearance(type: .solid(color: .gray, background: Color(.secondarySystemBackground)))
+                    .multiline(lines: 16, scales: [1: 0.3])
+                    .animation(type: .pulse())
                     Spacer()
                 }
                 VStack {
                     BusinessSearchBarView(viewModel: self.searchbarViewModel, onSearch: { term, location, categories in
-                        self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
+                        let _ = self.viewModel.searchBusinesses(keyword: term, location: location, categories: categories)
                     })
                     .padding(EdgeInsets.init(top: 200, leading: 10, bottom: 0, trailing: 10))
                     .zIndex(2)

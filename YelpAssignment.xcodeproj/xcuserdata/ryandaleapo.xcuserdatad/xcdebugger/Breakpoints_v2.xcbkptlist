@@ -243,22 +243,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8182BB98-4B02-4D3F-B498-2BCC73A80FF8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YelpAssignment/ViewModel/BusinessDetailViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "fetchBusinessReviews(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "94BBCA74-A34B-495C-9D3D-E19EC7183A84"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -282,8 +266,8 @@
             filePath = "YelpAssignment/View/BusinessesHomeView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "buildBusinessListView(businesses:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -317,22 +301,6 @@
             startingLineNumber = "54"
             endingLineNumber = "54"
             landmarkName = "getLocations(term:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "ADE93F7A-5B4C-4438-BFFF-1FBB801D7AD2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YelpAssignment/ViewModel/BusinessesHomeViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "searchBusinesses(keyword:location:categories:attributes:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

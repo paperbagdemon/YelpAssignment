@@ -29,6 +29,8 @@ final class BusinessesHomeViewModel: ObservableObject {
     private var bag = Set<AnyCancellable>()
     @Published private(set) var businesses: (value: [Business]?, error: Error?)
     @Published private(set) var deals: (value: [Business]?, error: Error?)
+    @Published private(set) var businessesCancellable: AnyCancellable?
+    
     var sortType = BusinessSortType.distance {
         didSet {
            sortBusinesses()
@@ -47,32 +49,98 @@ final class BusinessesHomeViewModel: ObservableObject {
     init(apiClient: APIClient) {
         self.apiClient = apiClient
     }
-    //MARK: Business services
-    func searchBusinesses(keyword: String? = nil, location: String? = nil, categories: [String]? = nil, attributes: [String]? = nil, completion: (([Business]?, Error?) -> Void)? = nil) {
+    //MARK: Webservices
+    func searchBusinesses(keyword: String? = nil, location: String? = nil, categories: [String]? = nil, attributes: [String]? = nil) -> Future<[Business]?, Error>? {
+        
         guard let keyword = keyword?.trimmingCharacters(in: .whitespacesAndNewlines), !keyword.isEmpty else {
-            return
+            //do nothing
+            return nil
         }
-        let service = SearchBusinessAPIService.init(client: self.apiClient)
-        if let locationValue = location?.trimmingCharacters(in: .whitespacesAndNewlines), !locationValue.isEmpty {
-            service.location = locationValue
-        } else if let coordinates = locationService.coordinates {
+        
+        return Future<[Business]?, Error> { promise in
+            let service = SearchBusinessAPIService.init(client: self.apiClient)
+            if let locationValue = location?.trimmingCharacters(in: .whitespacesAndNewlines), !locationValue.isEmpty {
+                service.location = locationValue
+            } else if let coordinates = self.locationService.coordinates {
+                service.latitude = coordinates.latitude
+                service.longitude = coordinates.longitude
+            } else {
+                let error = LocationError("Location is not provided, please enter a location in search bar or enable location services.")
+                self.businesses = (nil, error)
+                promise(.failure(error))
+                return
+            }
+            service.term = keyword
+            service.categories = categories
+            service.radius = 40000
+            service.attributes = attributes
+            self.businessesCancellable = service.request()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    self.businesses = (nil, error)
+                    promise(.failure(error))
+                case .finished: ()
+                }
+                self.businessesCancellable = nil
+            }) { value in
+                if let error = value?.error {
+                    let retError = APIServiceError(error.description ?? "Unable to find what you are looking for")
+                    self.businesses = (nil, retError)
+                    promise(.failure(retError))
+                } else {
+                    self.businesses = (value?.businesses, nil)
+                    promise(.success(value?.businesses))
+                }
+            }
+        }
+    }
+    
+    //MARK: Deals services
+    func fetchNearbyDeals(_ coordinates: Coordinates) -> Future<[Business]?, Error>{
+        return Future<[Business]?, Error> { promise in
+            let service = SearchBusinessAPIService.init(client: self.apiClient)
             service.latitude = coordinates.latitude
             service.longitude = coordinates.longitude
-        } else {
-            businesses = (nil, LocationError("Location is not provided, please enter a location in search bar or enable location services."))
-            completion?(businesses.value, businesses.error)
-            return
+            service.radius = 40000
+            service.attributes = ["deals"]
+            service.request()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    self.deals = (nil, error)
+                    promise(.failure(error))
+                case .finished: ()
+                }
+            }) { value in
+                if let error = value?.error {
+                    let retError = APIServiceError(error.description ?? "Unable to find what you are looking for")
+                    self.deals = (nil, retError)
+                    promise(.failure(retError))
+                } else {
+                    self.deals = (value?.businesses, nil)
+                    promise(.success(value?.businesses))
+                }
+            }
+            .store(in: &self.bag)
         }
-        service.term = keyword
-        service.categories = categories
-        service.radius = 40000
-        service.attributes = attributes
-        service.request(completion: { data, error in
-            self.businesses = (data?.businesses, error)
-            self.sortBusinesses()
-            completion?(data?.businesses, error)
-        })
     }
+
+    // MARK: Location Services
+    func startLocationService() {
+        locationService.startService()
+        locationService.$coordinates.sink { coordinates in
+            if let coordinatesValue = coordinates {
+                let _ = self.fetchNearbyDeals(coordinatesValue)
+            }
+        }
+        .store(in: &bag)
+    }
+    func stopLocationService() {
+        locationService.stopService()
+    }
+    
+    //MARK: Other
     func sortBusinesses() {
         self.businesses.value = self.businesses.value?.sorted(by: { (businessA, businessB) -> Bool in
             var valueA: Double
@@ -87,30 +155,5 @@ final class BusinessesHomeViewModel: ObservableObject {
             }
             return isSortedAscending ? valueA < valueB : valueA > valueB
         })
-    }
-    //MARK: Deals services
-    func fetchNearbyDeals(_ coordinates: Coordinates, completion: (([Business]?, Error?) -> Void)? = nil){
-        let service = SearchBusinessAPIService.init(client: self.apiClient)
-        service.latitude = coordinates.latitude
-        service.longitude = coordinates.longitude
-        service.radius = 40000
-        service.attributes = ["deals"]
-        service.request(completion: { data, error in
-            self.deals = (data?.businesses, error )
-            completion?(self.deals.value, self.deals.error)
-        })
-    }
-    // MARK: Location Services
-    func startLocationService() {
-        locationService.startService()
-        locationService.$coordinates.sink { coordinates in
-            if let coordinatesValue = coordinates {
-                self.fetchNearbyDeals(coordinatesValue)
-            }
-        }
-        .store(in: &bag)
-    }
-    func stopLocationService() {
-        locationService.stopService()
     }
 }

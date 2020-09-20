@@ -35,6 +35,7 @@ class SearchBusinessAPIService: APIService<SearchBusinessAPIServiceResult> {
     var openNow: Bool?
     var openAt: Int?
     var attributes: [String]?
+
     override var parameters: Parameters {
         var parameters: Parameters = [:]
         if let term = term,
@@ -94,6 +95,7 @@ class SearchBusinessAPIService: APIService<SearchBusinessAPIServiceResult> {
         }
         return parameters
     }
+
     override var endpoint: String {
         return "/businesses/search"
     }
