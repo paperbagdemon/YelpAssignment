@@ -21,17 +21,7 @@ struct Hour: Identifiable, Decodable {
 }
 
 extension Hour {
-//    enum WeekDay: String {
-//        typealias RawValue = <#type#>
-//
-//        case 0: "Monday"
-//        case 1: "Tuesday"
-//        case 2: "Wednesday"
-//        case 3: "Thursday"
-//        case 4: "Friday"
-//        case 5: "Saturday"
-//        case 6: "Sunday"
-//    }
+
     enum WeekDay: Int {
         case monday = 0
         case tuesday = 1
@@ -60,6 +50,7 @@ extension Hour {
           }
        }
     }
+
     func displayText() -> String {
         guard let open = self.open else {
             return ""
@@ -73,6 +64,7 @@ extension Hour {
         }
         return displayText
     }
+
     func displayHour(hour: String) -> String {
         var hourVal = Int(hour) ?? 0
         var modText = "AM"

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import YelpAssignment
+@testable import Yass
 
 class YelpAssignmentUITests: XCTestCase {
 
@@ -86,6 +86,38 @@ class YelpAssignmentUITests: XCTestCase {
         let exists3 = NSPredicate(format: "exists == 1")
         expectation(for: exists3, evaluatedWith: directionsView, handler: nil)
         waitForExpectations(timeout: 4, handler: nil)
+    }
+    
+    func testSearchBarCategorySuggest() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        app.buttons["businessSearchBarView.buttonLocation"].tap()
+        app.buttons["businessSearchBarView.buttonCategories"].tap()
+        let textField = app.textFields["businessSearchBarView.textFieldSearchCategories"]
+        textField.tap()
+        textField.typeText("loc")
+
+        let categorySuggest = app.descendants(matching: .any)["businessSearchBarView.autoSuggestList"]
+        let exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: categorySuggest, handler: nil)
+        waitForExpectations(timeout: 7, handler: nil)
+    }
+    
+    func testSearchBarLocationSuggest() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        app.buttons["businessSearchBarView.buttonLocation"].tap()
+        app.buttons["businessSearchBarView.buttonCategories"].tap()
+        let textField = app.textFields["businessSearchBarView.textFieldSearchLocation"]
+        textField.tap()
+        textField.typeText("makati")
+
+        let suggest = app.descendants(matching: .any)["businessSearchBarView.autoSuggestList"]
+        let exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: suggest, handler: nil)
+        waitForExpectations(timeout: 15, handler: nil)
     }
     
 }

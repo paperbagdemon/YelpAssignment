@@ -8,8 +8,7 @@
 
 import XCTest
 import Combine
-@testable import YelpAssignment
-
+@testable import Yass
 
 class LiveAPIServiceTests: XCTestCase {
     var bag = Set<AnyCancellable>()

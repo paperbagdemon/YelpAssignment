@@ -58,11 +58,13 @@ struct BusinessSearchBarView: View {
                 }, label: {
                     Image(systemName: isLocationSearchShown ? "pin.fill" : "pin")
                 })
+                .accessibility(identifier: "businessSearchBarView.buttonLocation")
                 Button(action: {
                     self.isCategoryShown.toggle()
                 }, label: {
                     Image(systemName: isCategoryShown ? "rectangle.3.offgrid.fill" : "rectangle.3.offgrid")
                 })
+                .accessibility(identifier: "businessSearchBarView.buttonCategories")
             }
             .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
             .foregroundColor(.secondary)
@@ -107,7 +109,7 @@ struct BusinessSearchBarView: View {
                         self.isCategoryShown = false
                     })
                     .foregroundColor(.primary)
-
+                    .accessibility(identifier: "businessSearchBarView.textFieldSearchLocation")
                     Button(action: {
                         self.viewModel.locationQuery = ""
                     }, label: {
@@ -146,7 +148,9 @@ struct BusinessSearchBarView: View {
                             self.onSearch?(self.viewModel.termQuery, self.viewModel.locationQuery, [self.viewModel.categoryQuery])
                             self.isLocationSearchShown = false
                             self.isCategoryShown = false
-                        }).foregroundColor(.primary)
+                        })
+                        .foregroundColor(.primary)
+                        .accessibility(identifier: "businessSearchBarView.textFieldSearchCategories")
                         Button(action: {
                             self.viewModel.categoryQuery = ""
                         }, label: {
@@ -175,7 +179,7 @@ struct BusinessSearchBarView: View {
             if !self.isCategoryShown {
                 return AnyView(EmptyView())
             }
-            suggestStrings = Category.suggestCategory(term: self.viewModel.categoryQuery).map({ value -> String in
+            suggestStrings = Setting.defaultSettings.suggestCategory(term: self.viewModel.categoryQuery).map({ value -> String in
                 return value.alias
             })
         case .location:
@@ -220,6 +224,7 @@ struct BusinessSearchBarView: View {
                         .background(Color(.secondarySystemBackground))
                     }
                 }
+                .accessibility(identifier: "businessSearchBarView.autoSuggestList")
             )
         } else {
             return AnyView(EmptyView())

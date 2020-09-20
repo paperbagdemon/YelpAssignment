@@ -16,7 +16,7 @@ protocol APIClientProtocol {
 }
 
 class APIClient: APIClientProtocol {
-    static let defaultClient = APIClient(apiKey: Setting.yelpAPIKey, baseURL: URL(string: Setting.yelpBaseURL)!)
+    static let defaultClient = APIClient(apiKey: Setting.defaultSettings.yelpAPIKey, baseURL: URL(string: Setting.defaultSettings.yelpBaseURL)!)
     var apiKey: String
     var baseUrl: URL
     lazy var session: Alamofire.Session = {

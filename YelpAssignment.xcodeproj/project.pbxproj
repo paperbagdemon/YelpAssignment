@@ -832,7 +832,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YelpAssignment.app/YelpAssignment";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Yass.app/Yass";
 			};
 			name = Debug;
 		};
@@ -853,7 +853,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YelpAssignment.app/YelpAssignment";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Yass.app/Yass";
 			};
 			name = Release;
 		};
