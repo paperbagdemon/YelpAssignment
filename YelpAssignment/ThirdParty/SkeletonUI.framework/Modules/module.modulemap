@@ -1,0 +1,11 @@
+framework module SkeletonUI {
+  umbrella header "SkeletonUI.h"
+
+  export *
+  module * { export * }
+}
+
+module SkeletonUI.Swift {
+    header "SkeletonUI-Swift.h"
+    requires objc
+}

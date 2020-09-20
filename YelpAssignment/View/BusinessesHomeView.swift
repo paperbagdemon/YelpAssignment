@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import SkeletonUI
 
 struct BusinessesHomeView: View {
     @ObservedObject var viewModel: BusinessesHomeViewModel
@@ -139,6 +140,7 @@ struct BusinessesHomeView: View {
                         BusinessListRowView(business: business)
                     }
                 }
+                .accessibility(identifier: "businessHomeView.listBusinesses")
             }
         )
     }

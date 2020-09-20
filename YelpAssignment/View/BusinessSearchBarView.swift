@@ -47,6 +47,7 @@ struct BusinessSearchBarView: View {
                 .onTapGesture {
                         print("focus")
                 }
+                .accessibility(identifier: "businessSearchBarView.textFieldSearchTerm")
                 Button(action: {
                     self.viewModel.termQuery = ""
                 }, label: {

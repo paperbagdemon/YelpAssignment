@@ -7,37 +7,85 @@
 //
 
 import XCTest
+@testable import YelpAssignment
 
 class YelpAssignmentUITests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testBusinessListIsLoading() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let searchField = app.textFields["businessSearchBarView.textFieldSearchTerm"]
+        searchField.tap()
+        searchField.typeText("restaurants")
+        searchField.typeText("\n")
+        
+        let countBusinesses = app.tables.children(matching: .cell)
+        let exists = NSPredicate(format: "count > 0")
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        expectation(for: exists, evaluatedWith: countBusinesses, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testDealsBannerIsLoading() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let dealsBanner = app.descendants(matching: .any)["dealsBannerView"]
+        let exists = NSPredicate(format: "exists > 0")
+
+        expectation(for: exists, evaluatedWith: dealsBanner, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testBusinessDetailsIsLoading() {
         let app = XCUIApplication()
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let searchField = app.textFields["businessSearchBarView.textFieldSearchTerm"]
+        searchField.tap()
+        searchField.typeText("restaurants")
+        searchField.typeText("\n")
+
+        let countBusinesses = app.tables.children(matching: .cell)
+        let exists = NSPredicate(format: "count > 0")
+        expectation(for: exists, evaluatedWith: countBusinesses, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
+        
+        app.cells.element(boundBy: 0).tap()
+        let businessDetail = app.descendants(matching: .any)["businessDetailView"]
+        let exists2 = NSPredicate(format: "exists == 1")
+        expectation(for: exists2, evaluatedWith: businessDetail, handler: nil)
+        
+        waitForExpectations(timeout: 2, handler: nil)
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-                XCUIApplication().launch()
-            }
-        }
+    func testDirectionsIsLoading() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let searchField = app.textFields["businessSearchBarView.textFieldSearchTerm"]
+        searchField.tap()
+        searchField.typeText("restaurants")
+        searchField.typeText("\n")
+
+        let countBusinesses = app.tables.children(matching: .cell)
+        let exists = NSPredicate(format: "count > 0")
+        expectation(for: exists, evaluatedWith: countBusinesses, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
+
+        app.cells.element(boundBy: 0).tap()
+        let businessDetail = app.descendants(matching: .any)["businessDetailView"]
+        let exists2 = NSPredicate(format: "exists == 1")
+        expectation(for: exists2, evaluatedWith: businessDetail, handler: nil)
+        waitForExpectations(timeout: 2, handler: nil)
+
+        let mapsView = app.descendants(matching: .any)["businessDetailView.mapView"]
+        mapsView.tap()
+        let directionsView = app.descendants(matching: .any)["directionsView"]
+        let exists3 = NSPredicate(format: "exists == 1")
+        expectation(for: exists3, evaluatedWith: directionsView, handler: nil)
+        waitForExpectations(timeout: 4, handler: nil)
     }
+    
 }

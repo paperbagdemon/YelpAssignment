@@ -55,6 +55,7 @@ struct DealsBannerView: View {
                 self.buildBusinessDetailView()
             }
         }
+        .accessibility(identifier: "dealsBannerView")
     }
     func buildPagerView() -> AnyView {
         if let deals = self.deals {

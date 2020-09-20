@@ -39,6 +39,7 @@ struct DirectionsView: View {
             .store(in: &self.events.bag)
             self.viewModel.getDirections()
         }
+        .accessibility(identifier: "directionsView")
     }
 
     init(viewModel: DirectionsViewModel){

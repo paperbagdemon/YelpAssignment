@@ -17,14 +17,15 @@ struct BusinessDetailView: View {
     var body: some View {
         buildBodyView()
             .onAppear {
-                self.viewModel.fetchBusinessDetail()
-                self.viewModel.fetchBusinessReviews()
+                let _ = self.viewModel.fetchBusinessDetail()
+                let _ = self.viewModel.fetchBusinessReviews()
         }
         .sheet(isPresented: self.$isShowingDirections) {
             self.buildBusinessDetailView()
         }
         .navigationBarTitle("")
         .navigationBarHidden(true)
+        .accessibility(identifier: "businessDetailView")
     }
 
     init(viewModel: BusinessDetailViewModel) {
@@ -103,6 +104,7 @@ struct BusinessDetailView: View {
                             MapView(coordinate: business.coordinates ?? Coordinates.init(latitude: 0, longitude: 0))
                             .frame(height: 160)
                         })
+                        .accessibility(identifier: "businessDetailView.mapView")
                         HStack {
                             VStack {
                                 Text(business.displayAddress())
@@ -151,7 +153,7 @@ struct BusinessDetailView: View {
 
 struct BusinessDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        BusinessDetailView(viewModel: BusinessDetailViewModel.init(apiClient: APIClient.defaultClient,
+        BusinessDetailView(viewModel: BusinessDetailViewModel(apiClient: APIClient.defaultClient,
                                                                    businessID: "sFKF4eyP6DKdr2o1qpykig",
                                                                    business: Business(id: "sFKF4eyP6DKdr2o1qpykig", name: "Lola Basyang's", imageUrl: nil,
                                                                    isClosed: nil, url: nil, price: nil, phone: "+639228177570",
